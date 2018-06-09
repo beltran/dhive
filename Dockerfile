@@ -11,8 +11,8 @@ RUN sed -i -e 's/#//' -e 's/default_ccache_name/# default_ccache_name/' /etc/krb
 
 RUN useradd -u 1098 hdfs
 
-ADD hadoop-2.7.3.tar.gz /
-RUN ln -s hadoop-2.7.3 hadoop
+ADD hadoop-2.7.6.tar.gz /
+RUN ln -s hadoop-2.7.6 hadoop
 RUN chown -R -L hdfs /hadoop
 
 
@@ -20,6 +20,7 @@ COPY core-site.xml /hadoop/etc/hadoop/
 COPY hdfs-site.xml /hadoop/etc/hadoop/
 COPY ssl-server.xml /hadoop/etc/hadoop/
 COPY yarn-site.xml /hadoop/etc/hadoop/
+COPY hadoop-env.sh /hadoop/etc/hadoop/
 
 COPY start-namenode.sh /
 COPY start-datanode.sh /
