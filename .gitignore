@@ -2,7 +2,11 @@ hadoop-*.tar.gz
 tez*.tar.gz
 .env
 keytabs/*
-userlogs
+logs
+
+nohup.out
+
+hadoop
 
 .DS_Store
 .idea/

@@ -12,6 +12,12 @@ hdfs dfs -mkdir -p /apps/tez/
 # the path
 hadoop fs -copyFromLocal tez.tar.gz /apps/tez/
 
+# Set small renewal interval for testing and small lifetime
+until kinit -kt /var/keytabs/hdfs.keytab hdfs/nn.example.com -l 30s -r 2m; do sleep 2; done
+klist -f
 export HADOOP_CLASSPATH=${TEZ_CONF_DIR}:${TEZ_JARS}/*:${TEZ_JARS}/lib/*
 #hadoop "$TEZ_JARS/tez-examples*.jar" orderedwordcount /user/ifilonenko/people.txt
-hadoop jar tez_jars/tez-examples-0.10.0-SNAPSHOT.jar orderedwordcount hdfs://nn.example.com:9000/user/ifilonenko/people.txt /user/ifilonenko/
+hadoop jar $TEZ_JARS/tez-examples-0.10.0-SNAPSHOT.jar longnothing hdfs://nn.example.com:9000/user/ifilonenko/people.txt /user/ifilonenko/
+hadoop fs -cat /user/ifilonenko/part-v002-o000-r-00000
+
+echo "TEZ JOB FINISHED"

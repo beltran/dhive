@@ -16,6 +16,3 @@ hdfs dfs -copyFromLocal /people.txt /user/ifilonenko
 
 hdfs dfs -chmod -R 755 /user/ifilonenko
 hdfs dfs -chown -R ifilonenko /user/ifilonenko
-
-
-sleep 60
