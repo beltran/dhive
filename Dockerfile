@@ -20,15 +20,27 @@ COPY core-site.xml /hadoop/etc/hadoop/
 COPY hdfs-site.xml /hadoop/etc/hadoop/
 COPY ssl-server.xml /hadoop/etc/hadoop/
 COPY yarn-site.xml /hadoop/etc/hadoop/
+COPY tez-site.xml /hadoop/etc/hadoop/
+
 COPY hadoop-env.sh /hadoop/etc/hadoop/
+COPY yarn-env.sh /hadoop/etc/hadoop/
 
 COPY start-namenode.sh /
 COPY start-datanode.sh /
+COPY start-resourcemanager.sh /
+COPY start-nodemanager.sh /
 COPY populate-data.sh /
+COPY run-and-install-tez.sh /
 COPY start-kdc.sh /
 
 COPY people.json /
 COPY people.txt /
+
+ENV TEZ_CONF_DIR=/hadoop/etc/hadoop/
+ENV TEZ_JARS=/tez_jars
+COPY tez.tar.gz /
+RUN mkdir $TEZ_JARS
+RUN tar -xvzf tez.tar.gz -C $TEZ_JARS
 
 ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
 ENV PATH=/hadoop/bin:$PATH

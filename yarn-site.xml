@@ -23,4 +23,25 @@
     <name>yarn.resourcemanager.principal</name>
     <value>yarn/_HOST@EXAMPLE.COM</value>
   </property>
+
+  <property>
+    <name>yarn.resourcemanager.keytab</name>
+    <value>/var/keytabs/hdfs.keytab</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.principal</name>
+    <value>yarn/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.keytab</name>
+    <value>/var/keytabs/hdfs.keytab</value>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>rm.example.com</value>
+  </property>
+
 </configuration>

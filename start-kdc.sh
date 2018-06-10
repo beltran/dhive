@@ -12,13 +12,36 @@
 
 /usr/sbin/kadmin.local -q "addprinc -randkey hdfs/nn.example.com"
 /usr/sbin/kadmin.local -q "addprinc -randkey HTTP/nn.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey yarn/nn.example.com"
+
 /usr/sbin/kadmin.local -q "addprinc -randkey hdfs/dn1.example.com"
 /usr/sbin/kadmin.local -q "addprinc -randkey HTTP/dn1.example.com"
 
+/usr/sbin/kadmin.local -q "addprinc -randkey hdfs/rm.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey HTTP/rm.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey yarn/rm.example.com"
+
+
+/usr/sbin/kadmin.local -q "addprinc -randkey hdfs/nm1.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey HTTP/nm1.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey yarn/nm1.example.com"
+
+
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hdfs/nn.example.com"
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab HTTP/nn.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab yarn/nn.example.com"
+
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hdfs/dn1.example.com"
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab HTTP/dn1.example.com"
+
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hdfs/rm.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab HTTP/rm.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab yarn/rm.example.com"
+
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hdfs/nm1.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab HTTP/nm1.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab yarn/nm1.example.com"
+
 
 chown hdfs /var/keytabs/hdfs.keytab
 
