@@ -1,3 +1,8 @@
-hadoop-2.7.3.tar.gz
+hadoop-*.tar.gz
+tez*.tar.gz
 .env
 keytabs/*
+userlogs
+
+.DS_Store
+.idea/

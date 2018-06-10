@@ -14,4 +14,4 @@ hadoop fs -copyFromLocal tez.tar.gz /apps/tez/
 
 export HADOOP_CLASSPATH=${TEZ_CONF_DIR}:${TEZ_JARS}/*:${TEZ_JARS}/lib/*
 #hadoop "$TEZ_JARS/tez-examples*.jar" orderedwordcount /user/ifilonenko/people.txt
-hadoop jar tez_jars/tez-examples-0.10.0-SNAPSHOT.jar orderedwordcount /user/ifilonenko/people.txt
+hadoop jar tez_jars/tez-examples-0.10.0-SNAPSHOT.jar orderedwordcount hdfs://nn.example.com:9000/user/ifilonenko/people.txt /user/ifilonenko/

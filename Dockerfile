@@ -16,25 +16,25 @@ RUN ln -s hadoop-2.7.6 hadoop
 RUN chown -R -L hdfs /hadoop
 
 
-COPY core-site.xml /hadoop/etc/hadoop/
-COPY hdfs-site.xml /hadoop/etc/hadoop/
-COPY ssl-server.xml /hadoop/etc/hadoop/
-COPY yarn-site.xml /hadoop/etc/hadoop/
-COPY tez-site.xml /hadoop/etc/hadoop/
+COPY conf/core-site.xml /hadoop/etc/hadoop/
+COPY conf/hdfs-site.xml /hadoop/etc/hadoop/
+COPY conf/ssl-server.xml /hadoop/etc/hadoop/
+COPY conf/yarn-site.xml /hadoop/etc/hadoop/
+COPY conf/tez-site.xml /hadoop/etc/hadoop/
 
-COPY hadoop-env.sh /hadoop/etc/hadoop/
-COPY yarn-env.sh /hadoop/etc/hadoop/
+COPY env/hadoop-env.sh /hadoop/etc/hadoop/
+COPY env/yarn-env.sh /hadoop/etc/hadoop/
 
-COPY start-namenode.sh /
-COPY start-datanode.sh /
-COPY start-resourcemanager.sh /
-COPY start-nodemanager.sh /
-COPY populate-data.sh /
-COPY run-and-install-tez.sh /
-COPY start-kdc.sh /
+COPY docker_scripts/start-namenode.sh /
+COPY docker_scripts/start-datanode.sh /
+COPY docker_scripts/start-resourcemanager.sh /
+COPY docker_scripts/start-nodemanager.sh /
+COPY docker_scripts/populate-data.sh /
+COPY docker_scripts/run-and-install-tez.sh /
+COPY docker_scripts/start-kdc.sh /
 
-COPY people.json /
-COPY people.txt /
+COPY data/people.json /
+COPY data/people.txt /
 
 ENV TEZ_CONF_DIR=/hadoop/etc/hadoop/
 ENV TEZ_JARS=/tez_jars

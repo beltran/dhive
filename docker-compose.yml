@@ -44,6 +44,7 @@ services:
   rm:
     ports:
       - 8031:8031
+      - 8032:8032
     container_name: rm.example
     hostname: rm.example.com
     user: hdfs

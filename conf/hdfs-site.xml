@@ -51,7 +51,7 @@
   <!-- For testing, we want tokens to expire FAST -->
   <property>
     <name>dfs.namenode.delegation.token.max-lifetime</name>
-    <value>180000</value> <!-- 3 minutes -->
+    <value>1800000</value> <!-- 30 minutes -->
   </property>
   <property>
     <name>dfs.namenode.delegation.token.renew-interval</name>
