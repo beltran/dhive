@@ -69,4 +69,19 @@
     <value>false</value>
   </property>
 
+  <property>
+    <name>yarn.resourcemanager.delegation.token.max-lifetime</name>
+    <value>30000</value>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.delegation.key.update-interval</name>
+    <value>30000</value>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.delegation.token.renew-interval</name>
+    <value>30000</value>
+  </property>
+
 </configuration>

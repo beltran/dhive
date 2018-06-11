@@ -5,7 +5,6 @@ pull_logs(){
     docker logs $1.example  &> logs/$1.txt
 }
 
-
 while [ 3 -lt 4 ]
 do
     rm -rf logs/userlogs

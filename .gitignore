@@ -10,3 +10,5 @@ hadoop
 
 .DS_Store
 .idea/
+
+assure_tez.sh

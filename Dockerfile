@@ -6,14 +6,16 @@ RUN yum -y install apache-commons-daemon-jsvc
 RUN yum install net-tools -y
 RUN yum install telnet telnet-server -y
 RUN yum -y install which
-
+#RUN echo "hdfs ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+#RUN yum -y install sudo
 RUN sed -i -e 's/#//' -e 's/default_ccache_name/# default_ccache_name/' /etc/krb5.conf
 
 RUN useradd -u 1098 hdfs
 
-ADD hadoop-2.7.6.tar.gz /
-RUN ln -s hadoop-2.7.6 hadoop
+ADD hadoop-3.1.0.tar.gz /
+RUN ln -s hadoop-3.1.0 hadoop
 RUN chown -R -L hdfs /hadoop
+
 
 
 COPY conf/core-site.xml /hadoop/etc/hadoop/

@@ -1,38 +1,38 @@
 #!/usr/bin/env bash
 
 
-TEZ_PAZ=/Users/jmarhuenda/workspace/tez
 VERSION=0.10.0-SNAPSHOT
 TEZ_JOB_FINISH="TEZ JOB FINISHED"
 SCRIPTS_PATH=scripts
+HADOOP_VERSION=3.1.0
+HADOOP_URL=http://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
-wait_for_tez_job () {
-    for i in {1..5}
-    do
-        output=$(docker logs run-tez.example 2>&1 | grep "$TEZ_JOB_FINISH")
-        if [ -z "output" ]
-        then
-            echo "Waiting to more seconds for tez job"
-            sleep 2
-        else
-            echo "Tez job finished"
-            break
-        fi
-        if [ $i -eq 5 ]; then
-            echo "Tez job didn't finish after the waiting time"
-            echo "Will still copy the logs and bring up the UI"
-        fi
-    done
+assure_hadoop() {
+    # Download only if the file doesn't exist
+    wget -nc $HADOOP_URL
 }
 
-pushd $TEZ_PAZ
-mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true || { echo 'Error compiling' ; exit 1; }
-popd
+assure_tez() {
+    if [ ! -f $SCRIPTS_PATH/assure_tez.sh ]; then
+        echo "File $SCRIPTS_PATH/assure_tez.sh should exist"
+        echo "It should generate the file ter.tar.gz in the root directory"
+        echo "If a file already exists generate a noop file"
+        echo "If you have local distribution you want to test"
+        echo "that script is a good place to compile it and move"
+        echo "it to ./ter.tar.gz. Otherwise download it and rename it"
+        exit 1
+    fi
+    source $SCRIPTS_PATH/assure_tez.sh
+}
 
-cp $TEZ_PAZ/tez-dist/target/tez-$VERSION.tar.gz tez.tar.gz || { echo 'Copy failed' ; exit 3; }
+assure_hadoop
+assure_tez
 
-# Delete userlogs from previous runs
-rm -rf userlogs
+echo "Killing previous server and pull script"
+ps aux | grep SimpleHTTPServer | awk '{print $2}' | xargs kill -9
+ps aux | grep forever_pull_logs.sh | awk '{print $2}' | xargs kill -9
+
+rm -rf logs nohup.out
 
 echo "Tearing down old docker instances"
 docker-compose down
@@ -42,9 +42,6 @@ docker volume rm hadoop-kerberos_server-keytab
 
 echo "Bringing up the docker instances"
 docker-compose up -d --force-recreate --build
-
-echo "Waiting for tez job to finish"
-wait_for_tez_job
 
 echo "Getting logs"
 source $SCRIPTS_PATH/pull_logs.sh

@@ -15,7 +15,7 @@ pushd logs
 echo "Starting UI"
 echo "YARN and apps UI at: http://localhost:8088/cluster/apps"
 echo "Pulled logs from apps at: http://localhost:8000/"
-python -m SimpleHTTPServer 8000 &
+nohup python -m SimpleHTTPServer 8000 &
 popd
 
 nohup $SCRIPTS_PATH/forever_pull_logs.sh &
