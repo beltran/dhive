@@ -13,8 +13,8 @@ hdfs dfs -mkdir -p /apps/tez/
 hadoop fs -copyFromLocal tez.tar.gz /apps/tez/
 
 # Set small renewal interval for testing and small lifetime
-kdestroy -A
-until kinit -kt /var/keytabs/hdfs.keytab hdfs/nn.example.com -l 60s -r 100s; do sleep 2; done
+#kdestroy -A
+#until kinit -kt /var/keytabs/hdfs.keytab hdfs/nn.example.com -l 60s -r 100s; do sleep 2; done
 klist -f
 export HADOOP_CLASSPATH=${TEZ_CONF_DIR}:${TEZ_JARS}/*:${TEZ_JARS}/lib/*
 

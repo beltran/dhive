@@ -75,6 +75,34 @@ services:
       - server-keytab:/var/keytabs
       - /hadoop
 
+  hs2:
+    container_name: hs2.example
+    hostname: hs2.example.com
+    user: hdfs
+    entrypoint: /start-hive.sh
+    build:
+      context: .
+      args:
+        - http_proxy
+        - https_proxy
+    volumes:
+      - server-keytab:/var/keytabs
+      - /hadoop
+
+  #mysql:
+    # Latest giving "ERROR 2059 (HY000): Authentication plugin 'caching_sha2_password' cannot be loaded:" atm
+    #image: mysql/mysql-server:5.7
+    #hostname: mysql.example.com
+    #container_name: mysql.example
+    #ports:
+      #- 3306
+    #environment:
+      #- MYSQL_DATABASE=db
+      #- MYSQL_ROOT_PASSWORD=password
+      #- MYSQL_ROOT_HOST=%
+      #- MYSQL_USER=hive
+      #- MYSQL_PASSWORD=hivepass
+
   data-populator:
     container_name: data-populator.example
     hostname: data-populator.example.com

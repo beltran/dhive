@@ -92,7 +92,7 @@
   </property>
   <property>
     <name>dfs.namenode.kerberos.principal</name>
-    <value>hdfs/_HOST@EXAMPLE.COM</value>
+      <value>hdfs/_HOST@EXAMPLE.COM</value>
   </property>
   <property>
     <name>dfs.namenode.kerberos.internal.spnego.principal</name>

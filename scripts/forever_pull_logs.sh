@@ -19,6 +19,7 @@ do
     pull_logs "dn1"
     pull_logs "rm"
     pull_logs "nm1"
+    pull_logs "hs2"
     pull_logs "run-tez"
 
     sleep 5

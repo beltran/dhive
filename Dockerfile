@@ -6,8 +6,8 @@ RUN yum -y install apache-commons-daemon-jsvc
 RUN yum install net-tools -y
 RUN yum install telnet telnet-server -y
 RUN yum -y install which
-#RUN echo "hdfs ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-#RUN yum -y install sudo
+RUN echo "hdfs ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN yum -y install sudo
 RUN sed -i -e 's/#//' -e 's/default_ccache_name/# default_ccache_name/' /etc/krb5.conf
 
 RUN useradd -u 1098 hdfs
@@ -15,6 +15,8 @@ RUN useradd -u 1098 hdfs
 ADD hadoop-3.1.0.tar.gz /
 RUN ln -s hadoop-3.1.0 hadoop
 RUN chown -R -L hdfs /hadoop
+#RUN chmod 777 -R /tmp && chmod o+t -R /tmp
+#RUN chown -R -L hdfs /hadoop
 
 
 
@@ -34,16 +36,31 @@ COPY docker_scripts/start-nodemanager.sh /
 COPY docker_scripts/populate-data.sh /
 COPY docker_scripts/run-and-install-tez.sh /
 COPY docker_scripts/start-kdc.sh /
+COPY docker_scripts/start-hive.sh /
+COPY conf/hive-site.xml /hadoop/etc/hadoop/
 
 COPY data/people.json /
 COPY data/people.txt /
 
+# Tez section
 ENV TEZ_CONF_DIR=/hadoop/etc/hadoop/
 ENV TEZ_JARS=/tez_jars
 COPY tez.tar.gz /
 RUN mkdir $TEZ_JARS
 RUN tar -xvzf tez.tar.gz -C $TEZ_JARS
 
+# Hive section
+ENV HIVE_HOME=/hive
+COPY hive.tar.gz /
+RUN mkdir $HIVE_HOME
+RUN mkdir $HIVE_HOME/metastore
+RUN mkdir $HIVE_HOME/tmp
+RUN tar -xvzf hive.tar.gz -C $HIVE_HOME --strip-components 1
+ENV PATH=$HIVE_HOME/bin:$PATH
+RUN chown -R -L hdfs $HIVE_HOME
+
+#
 ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
 ENV PATH=/hadoop/bin:$PATH
 ENV HADOOP_CONF_DIR=/hadoop/etc/hadoop
+ENV HIVE_CONF_DIR=$HADOOP_CONF_DIR
