@@ -12,7 +12,7 @@
     </property>
     <property>
         <name>hive.exec.scratchdir</name>
-        <value>file:///hive/tmp/scratchdir</value>
+        <value>hdfs:///user/hive/tmp/scratchdir</value>
         <description>Scratch space for Hive jobs</description>
     </property>
     <property>
@@ -66,22 +66,22 @@
     <!-- Metastore server -->
 
     <!-- Mysql conf
-    <property>
-      <name>javax.jdo.option.ConnectionURL</name>
-      <value>jdbc:mysql://mysql.example.com/metastore?createDatabaseIfNotExist=true</value>
-   </property>
-   <property>
-      <name>javax.jdo.option.ConnectionDriverName</name>
-      <value>com.mysql.jdbc.Driver</value>
-   </property>
-   <property>
-      <name>javax.jdo.option.ConnectionUserName</name>
-      <value>root</value>
-   </property>
-   <property>
-      <name>javax.jdo.option.ConnectionPassword</name>
-      <value>password</value>
-   </property>
+        <property>
+          <name>javax.jdo.option.ConnectionURL</name>
+          <value>jdbc:mysql://mysql.example.com/metastore?createDatabaseIfNotExist=true</value>
+       </property>
+       <property>
+          <name>javax.jdo.option.ConnectionDriverName</name>
+          <value>com.mysql.jdbc.Driver</value>
+       </property>
+       <property>
+          <name>javax.jdo.option.ConnectionUserName</name>
+          <value>root</value>
+       </property>
+       <property>
+          <name>javax.jdo.option.ConnectionPassword</name>
+          <value>password</value>
+       </property>
     -->
 
     <!-- Metastore database -->
@@ -95,7 +95,7 @@
     </property>
     <property>
         <name>hive.metastore.warehouse.dir</name>
-        <value>file:///hive/tmp/metastore</value>
+        <value>hdfs:///user/hive/tmp/metastore</value>
     </property>
     <property>
         <name>hive.metastore.uris</name>
@@ -106,16 +106,14 @@
         <value>false</value>
     </property>
 
+    <!-- Metastore server -->
     <property>
-        <name>hive.querylog.location</name>
-        <value>/hive/iotmp</value>
-        <description>Location of Hive run time structured log file</description>
+        <name>hive.metastore.server.min.threads</name>
+        <value>5</value>
     </property>
-
     <property>
-        <name>hive.downloaded.resources.dir</name>
-        <value>/hive/iotmp</value>
-        <description>Temporary local directory for added resources in the remote file system.</description>
+        <name>hive.metastore.server.max.threads</name>
+        <value>100</value>
     </property>
 
     <!--
@@ -127,6 +125,36 @@
     <property>
         <name>hive.server2.thrift.port</name>
         <value>10000</value>
+    </property>
+    <property>
+        <name>hive.execution.engine</name>
+        <value>tez</value>
+    </property>
+
+    <!-- Necessary for authentication between metastore and hiverserver2-->
+    <property>
+        <name>hadoop.proxyuser.hive.hosts</name>
+        <value>hs2.example.com</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.hive.groups</name>
+        <value>*</value>
+    </property>
+
+    <property>
+        <name>hive.user.install.directory</name>
+        <value>/apps/hive/install</value>
+    </property>
+
+    <!-- beeline parameters
+    <property>
+        <name>hive.users.in.admin.role</name>
+        <value>hive/hs2.example.com@EXAMPLE.COM</value>
+    </property>
+    -->
+    <property>
+        <name>hive.tez.container.size</name>
+        <value>2048</value>
     </property>
 
 </configuration>

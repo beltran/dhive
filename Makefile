@@ -5,12 +5,19 @@ SCRIPTS_PATH=scripts
 assure-all:
 	./${SCRIPTS_PATH}/assure_components.sh
 
+all: assure-all start
+
 stop:
 	docker-compose down
 
 start: stop start-monitoring
 	docker volume rm hadoop-kerberos_server-keytab || true
 	docker-compose up -d --force-recreate --build
+
+restart-hive:
+	docker rm -f hs2.example || true
+	docker-compose build hs2
+	docker-compose run --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
 
 pull-logs:
 	./${SCRIPTS_PATH}/pull_logs.sh

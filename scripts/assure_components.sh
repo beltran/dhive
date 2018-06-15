@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-VERSION=0.10.0-SNAPSHOT
-TEZ_JOB_FINISH="TEZ JOB FINISHED"
 SCRIPTS_PATH=scripts
 HADOOP_VERSION=3.1.0
 HADOOP_URL=http://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz

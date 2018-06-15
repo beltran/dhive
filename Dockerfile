@@ -37,6 +37,7 @@ COPY docker_scripts/populate-data.sh /
 COPY docker_scripts/run-and-install-tez.sh /
 COPY docker_scripts/start-kdc.sh /
 COPY docker_scripts/start-hive.sh /
+COPY docker_scripts/sleep.sh /
 COPY conf/hive-site.xml /hadoop/etc/hadoop/
 
 COPY data/people.json /
