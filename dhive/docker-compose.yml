@@ -5,7 +5,7 @@ services:
     hostname: kerberos.example.com
     entrypoint: /start-kdc.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy
@@ -20,7 +20,7 @@ services:
     user: hdfs
     entrypoint: /start-namenode.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy
@@ -34,7 +34,7 @@ services:
     user: hdfs
     entrypoint: /start-datanode.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy
@@ -51,7 +51,7 @@ services:
     user: hdfs
     entrypoint: /start-resourcemanager.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy
@@ -67,7 +67,7 @@ services:
     user: hdfs
     entrypoint: /start-nodemanager.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy
@@ -81,7 +81,7 @@ services:
     user: hdfs
     entrypoint: /start-hive.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy
@@ -109,7 +109,7 @@ services:
     user: hdfs
     entrypoint: /populate-data.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy
@@ -122,7 +122,7 @@ services:
     user: hdfs
     entrypoint: /run-and-install-tez.sh
     build:
-      context: .
+      context: ./containers/base
       args:
         - http_proxy
         - https_proxy

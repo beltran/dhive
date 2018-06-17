@@ -12,8 +12,8 @@ RUN sed -i -e 's/#//' -e 's/default_ccache_name/# default_ccache_name/' /etc/krb
 
 RUN useradd -u 1098 hdfs
 
-ADD hadoop-3.1.0.tar.gz /
-RUN ln -s hadoop-3.1.0 hadoop
+ADD hadoop-{{ hadoop_version }}.tar.gz /
+RUN ln -s hadoop-{{ hadoop_version }} hadoop
 RUN chown -R -L hdfs /hadoop
 #RUN chmod 777 -R /tmp && chmod o+t -R /tmp
 #RUN chown -R -L hdfs /hadoop
@@ -26,8 +26,8 @@ COPY conf/ssl-server.xml /hadoop/etc/hadoop/
 COPY conf/yarn-site.xml /hadoop/etc/hadoop/
 COPY conf/tez-site.xml /hadoop/etc/hadoop/
 
-COPY env/hadoop-env.sh /hadoop/etc/hadoop/
-COPY env/yarn-env.sh /hadoop/etc/hadoop/
+COPY env /hadoop/etc/hadoop/
+COPY env /hadoop/etc/hadoop/
 
 COPY docker_scripts/start-namenode.sh /
 COPY docker_scripts/start-datanode.sh /

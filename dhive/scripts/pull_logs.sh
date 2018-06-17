@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SCRIPTS_PATH=scripts
+SCRIPTS_PATH=build/scripts
 
 echo "Killing previous server and pull script"
 ps aux | grep SimpleHTTPServer | awk '{print $2}' | xargs kill -9
@@ -18,6 +18,6 @@ echo "Pulled logs from apps at: http://localhost:8000/"
 python -m SimpleHTTPServer 8000 >/dev/null 2>&1 &
 popd
 
-nohup $SCRIPTS_PATH/forever_pull_logs.sh &
+nohup bash $SCRIPTS_PATH/forever_pull_logs.sh &
 
 #xdg-open http://localhost:8000/

@@ -1,5 +1,4 @@
-hadoop-*.tar.gz
-tez*.tar.gz
+*.tar.gz
 .env
 keytabs/*
 logs
@@ -11,4 +10,4 @@ hadoop
 .DS_Store
 .idea/
 
-assure_tez.sh
+build

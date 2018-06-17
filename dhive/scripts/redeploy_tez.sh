@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-SCRIPTS_PATH=scripts
-HADOOP_VERSION=3.1.0
+
+VERSION={{ tez_version }}
+TEZ_JOB_FINISH="TEZ JOB FINISHED"
+SCRIPTS_PATH=build/scripts
+HADOOP_VERSION={{ hadoop_version }}
 HADOOP_URL=http://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 assure_hadoop() {
@@ -39,3 +42,20 @@ assure_hive() {
 assure_hadoop
 assure_tez
 assure_hive
+
+echo "Killing previous server and pull script"
+ps aux | grep SimpleHTTPServer | awk '{print $2}' | xargs kill -9
+ps aux | grep forever_pull_logs.sh | awk '{print $2}' | xargs kill -9
+rm -rf logs nohup.out
+
+echo "Tearing down old docker instances"
+docker-compose down
+
+echo "Manually deleting kerberos volume"
+docker volume rm hadoop-kerberos_server-keytab
+
+echo "Bringing up the docker instances"
+docker-compose up -d --force-recreate --build
+
+echo "Getting logs"
+source $SCRIPTS_PATH/pull_logs.sh

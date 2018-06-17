@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-HIVE_VERSION=4.0.0-SNAPSHOT
+HIVE_VERSION={{ hive_version }}
 HIVE_DFS_INSTALL=/apps/hive/install
 
 if [[ -z "${HIVE_HOME}" ]]; then
