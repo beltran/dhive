@@ -1,0 +1,13 @@
+hs2:
+  container_name: hs2.example
+  hostname: hs2.example.com
+  user: hdfs
+  entrypoint: /start-hive.sh
+  build:
+    context: ./containers/base
+    args:
+      - http_proxy
+      - https_proxy
+  volumes:
+    - server-keytab:/var/keytabs
+    - /hadoop

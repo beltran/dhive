@@ -1,0 +1,28 @@
+nn:
+  ports:
+    - 9000:9000
+  container_name: nn.example
+  hostname: nn.example.com
+  user: hdfs
+  entrypoint: /start-namenode.sh
+  build:
+    context: ./containers/base
+    args:
+      - http_proxy
+      - https_proxy
+  volumes:
+    - server-keytab:/var/keytabs
+    - /hadoop
+
+dn1:
+  container_name: dn1.example
+  hostname: dn1.example.com
+  user: hdfs
+  entrypoint: /start-datanode.sh
+  build:
+    context: ./containers/base
+    args:
+      - http_proxy
+      - https_proxy
+  volumes:
+    - server-keytab:/var/keytabs
