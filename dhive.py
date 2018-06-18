@@ -18,21 +18,21 @@ class Generator(object):
         self.config_file = config_file
         self.output_dir = output_dir
         self.CONFIG_DIRECTORY = os.path.join(self.output_dir, "containers/base/conf")
-        self.MODULE_DIRECTORY = os.path.join(self.output_dir, "modules")
+        self.MODULE_DIRECTORY = os.path.join(self.output_dir, "services")
         self.DOCKER_COMPOSE_FILE = os.path.join(self.output_dir, "docker-compose.yml")
 
     def populate_configuration(self, config):
-        # Write extra hive properties
-        if "hive" in config:
-            hive_file_name = os.path.join(self.CONFIG_DIRECTORY, "hive-site.xml")
-            for name, value in config["hive"].items():
-                self.write_property(hive_file_name, name, value)
+        self._populate_configuration_module(config, "core")
+        self._populate_configuration_module(config, "hdfs")
+        self._populate_configuration_module(config, "yarn")
+        self._populate_configuration_module(config, "tez")
+        self._populate_configuration_module(config, "hive")
 
-        # Write extra tez properties
-        if "tez" in config:
-            tez_file_name = os.path.join(self.CONFIG_DIRECTORY, "tez-site.xml")
-            for name, value in config["tez"].items():
-                self.write_property(tez_file_name, name, value)
+    def _populate_configuration_module(self, config, service):
+        if service in config:
+            file_name = os.path.join(self.CONFIG_DIRECTORY, service + "-site.xml")
+            for name, value in config[service].items():
+                self.write_property(file_name, name, value)
 
     def write_property(self, file_name, name, value):
         tree = ET.parse(file_name)
@@ -111,11 +111,11 @@ class Generator(object):
 
         compose_template["services"] = {}
 
-        for module in config["modules"]["modules"].split(","):
+        for module in config["services"]["services"].split(","):
             module_file = os.path.join(self.MODULE_DIRECTORY, module + ".yml")
             if not os.path.exists(module_file):
                 raise Exception("The file {0}.yml should exist under "
-                                "dhive/modules for a module named {0}".format(module))
+                                "dhive/services for a module named {0}".format(module))
 
             with open(module_file) as f:
                 module_yaml = yaml.safe_load(f)

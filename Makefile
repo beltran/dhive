@@ -34,5 +34,4 @@ start-monitoring: stop-monitoring
 	bash ${SCRIPTS_PATH}/pull_logs.sh
 
 clean: generate stop
-	echo "Warning this is going to detroy all the images and volumes in docker"
 	bash ${SCRIPTS_PATH}/clean.sh
