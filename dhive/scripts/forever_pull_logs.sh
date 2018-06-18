@@ -21,6 +21,7 @@ do
     pull_logs "nm1"
     pull_logs "hs2"
     pull_logs "run-tez"
+    docker cp hs2.example:/hive/tmp/metastore.log logs
 
     sleep 5
 done

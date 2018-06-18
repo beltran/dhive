@@ -18,7 +18,7 @@ start: stop start-monitoring
 	docker volume rm hadoop-kerberos_server-keytab || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml up -d --force-recreate --build
 
-restart-hive:
+restart-hive: assure-all
 	docker rm -f hs2.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hs2
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
@@ -35,3 +35,8 @@ start-monitoring: stop-monitoring
 
 clean: generate stop
 	bash ${SCRIPTS_PATH}/clean.sh
+
+destroy-clean: clean
+	bash ${SCRIPTS_PATH}/destroy_clean.sh
+
+dclean: destroy-clean

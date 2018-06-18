@@ -3,11 +3,10 @@ import configparser
 import os
 import jinja2
 import shutil
-import xml.etree.ElementTree as ET
-from xml.dom import minidom
-import io
 import yaml
 import argparse
+
+from utils import remove_property_if_exits, write_property
 
 ROOT_DIR = "dhive"
 GLOBAL_SECTION = "global"
@@ -31,31 +30,9 @@ class Generator(object):
     def _populate_configuration_module(self, config, service):
         if service in config:
             file_name = os.path.join(self.CONFIG_DIRECTORY, service + "-site.xml")
-            for name, value in config[service].items():
-                self.write_property(file_name, name, value)
-
-    def write_property(self, file_name, name, value):
-        tree = ET.parse(file_name)
-        root = tree.getroot()
-
-        property_node = ET.Element("property")
-        name_node = ET.SubElement(property_node, "name")
-        value_node = ET.SubElement(property_node, "value")
-        name_node.text = name
-        value_node.text = value
-
-        root.append(property_node)
-
-        stream = io.StringIO()
-        tree.write(stream, encoding="unicode")
-        reparsed = minidom.parseString(stream.getvalue().replace("\n", "").replace(" ", ""))
-        pretty_xml_as_string = reparsed.toprettyxml(indent="    ", newl="\n")
-
-        # Remove the file because we may not be able to write
-        # due to permissions
-        os.remove(file_name)
-        with open(file_name, 'w') as output:
-            output.write(pretty_xml_as_string)
+            for name, value in config.items(service):
+                remove_property_if_exits(file_name, name)
+                write_property(file_name, name, value)
 
     def generate_build(self, config):
         shutil.rmtree(self.output_dir, ignore_errors=True)
@@ -129,7 +106,6 @@ class Generator(object):
         with open(self.DOCKER_COMPOSE_FILE, "w") as f:
             f.write(output)
 
-
     def generate(self):
         config = self.parse_config()
         self.generate_build(config)
@@ -139,13 +115,20 @@ class Generator(object):
 
     def parse_config(self):
         config = configparser.ConfigParser()
+        config.optionxform = str
         config.read(self.config_file)
         return config
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate deployment files')
-    parser.add_argument('--config-file', type=str, default="vars.config", help="config file")
+
+    if "CONFIG_FILE" in os.environ:
+        default_config = os.environ["CONFIG_FILE"]
+    else:
+        default_config = "vars.config"
+
+    parser.add_argument('--config-file', type=str, default=default_config, help="config file")
     parser.add_argument('--output-dir', type=str, default="build", help="directory where the files are generated")
     args = parser.parse_args()
 

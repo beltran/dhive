@@ -7,7 +7,7 @@ mysql:
     - 3306
   environment:
     - MYSQL_DATABASE=db
-    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_ROOT_PASSWORD=root_pass
     - MYSQL_ROOT_HOST=%
     - MYSQL_USER=hive
     - MYSQL_PASSWORD=hivepass

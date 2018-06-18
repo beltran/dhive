@@ -2,6 +2,7 @@
 
 HIVE_VERSION={{ hive_version }}
 HIVE_DFS_INSTALL=/apps/hive/install
+MYSQL_VERSION={{ mysql_connector_version }}
 
 if [[ -z "${HIVE_HOME}" ]]; then
     exit 1
@@ -29,7 +30,16 @@ hdfs dfs -chown -R hive /user/hive/
 
 until kinit -kt /var/keytabs/hdfs.keytab hive/hs2.example.com; do sleep 2; done
 
+
 pushd /hive/tmp
+# Add mysql jars
+if [ -z "$MYSQL_VERSION" ]
+then
+    echo "Mysql is not being installed for the metastore"
+else
+    curl -L -o "`pwd`/mysql-connector-java-$MYSQL_VERSION.jar" "https://repo1.maven.org/maven2/mysql/mysql-connector-java/$MYSQL_VERSION/mysql-connector-java-$MYSQL_VERSION.jar"
+    export HIVE_CLASSPATH="`pwd`/mysql-connector-java-$MYSQL_VERSION.jar"
+fi
 hive --service metastore --hiveconf hive.root.logger=DEBUG,console &> metastore.log &
 
 # Wait for the metastore to come up
@@ -41,3 +51,7 @@ hive --service hiveserver2 --hiveconf hive.root.logger=DEBUG,console
 
 # To connect, like done previously in this script
 # beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"
+# jdbc:hive2://hs2.example.com:10000/>CREATE TABLE pokes (foo INT, bar STRING);
+# jdbc:hive2://hs2.example.com:10000/>CREATE TABLE invites (foo INT, bar STRING) PARTITIONED BY (ds STRING);
+# jdbc:hive2://hs2.example.com:10000/>SELECT * FROM pokes, invites;
+
