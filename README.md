@@ -1,8 +1,8 @@
-### Big Data Platform
+# Big Data Platform
 
 The aim of this proyect is to make it easy to deploy a kerberized stack of hadoop/yarn/tez/hive.
 
-#### Configure Docker networking
+## Configure Docker networking
 
 Hadoop requires reverse DNS.  Under docker-compose, we require an external network named "com" 
 for hosts to resolve forward and backwards.
@@ -11,9 +11,9 @@ for hosts to resolve forward and backwards.
 docker network create com
 ```
 
-#### Getting started
+## Getting started
 
-Running
+Running:
 ```
 make all
 ```
@@ -28,18 +28,16 @@ The file `vars.config` holds the values for:
 - The services that will be running.
 - Properties that will be overriden for core-site.xml, hdfs-site.xml, yarn-site.xml, tez-site.xml and hive-site.xml.
 
-To tear down everything
+To tear down everything:
 ```
 make clean
 ```
 
-#### Using a local hive or tez distribution
+## Using a local hive or tez distribution
 
 This can be enabled by setting the variables `HIVE_PATH` or `TEZ_PATH`. If we want dhive to also compile and push
 the generated tar to the docker containers the variables `HIVE_COMPILE` and `TEZ_COMPILE` have to be set to `1`,
 for example:
-
-By running
 ```
 HIVE_COMPILE=1 make clean all
 ```
@@ -47,7 +45,7 @@ HIVE_COMPILE=1 make clean all
 If `HIVE_PATH` or `TEZ_PATH` are not set dhive will download the release from the version specified in `vars.config`
 
 
-#### Run commands in containers
+## Run commands in containers
 
 We can do this from any running container:
 ```
@@ -73,7 +71,7 @@ That would imply modifying or creating a new `vars.config` file.
 Then adding a new `SERVICE_NAME.yml` to `dhive/services`. Maybe adding a start script
 to `dhive/scripts`. Maybe overriding or removing some of the properties of the
 configuration files.
-An example of this is adding a mysql backend for the hivemetastore. It can be run with
+An example of this is adding a mysql backend for the hivemetastore. It can be run with:
 ```
 CONFIG_FILE=vars_mysql.config make all
 ```
