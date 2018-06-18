@@ -1,0 +1,1 @@
+export HADOOP_ROOT_LOGGER=$HADOOP_LOG_LEVEL,console

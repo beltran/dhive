@@ -1,0 +1,13 @@
+mysql:
+  # Latest giving "ERROR 2059 (HY000): Authentication plugin 'caching_sha2_password' cannot be loaded:" atm
+  image: mysql/mysql-server:5.7
+  hostname: mysql.example.com
+  container_name: mysql.example
+  ports:
+    - 3306
+  environment:
+    - MYSQL_DATABASE=db
+    - MYSQL_ROOT_PASSWORD=root_pass
+    - MYSQL_ROOT_HOST=%
+    - MYSQL_USER=hive
+    - MYSQL_PASSWORD=hivepass

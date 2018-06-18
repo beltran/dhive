@@ -1,3 +1,14 @@
-hadoop-2.7.3.tar.gz
+*.tar.gz
 .env
 keytabs/*
+logs
+
+nohup.out
+
+hadoop
+
+.DS_Store
+.idea/
+
+build
+__pycache__/

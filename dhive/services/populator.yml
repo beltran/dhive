@@ -1,0 +1,12 @@
+data-populator:
+  container_name: data-populator.example
+  hostname: data-populator.example.com
+  user: hdfs
+  entrypoint: /populate-data.sh
+  build:
+    context: ./containers/base
+    args:
+      - http_proxy
+      - https_proxy
+  volumes:
+    - server-keytab:/var/keytabs

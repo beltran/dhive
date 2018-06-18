@@ -1,0 +1,12 @@
+run-install-tez-job:
+  container_name: run-tez.example
+  hostname: run-tez.example.com
+  user: hdfs
+  entrypoint: /run-and-install-tez.sh
+  build:
+    context: ./containers/base
+    args:
+      - http_proxy
+      - https_proxy
+  volumes:
+    - server-keytab:/var/keytabs

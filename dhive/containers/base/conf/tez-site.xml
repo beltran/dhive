@@ -1,0 +1,41 @@
+
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+  <property>
+    <name>tez.lib.uris</name>
+    <value>hdfs://nn.example.com:9000/apps/tez/tez.tar.gz</value>
+  </property>
+
+  <property>
+    <name>tez.task-specific.log.level</name>
+    <value>DEBUG</value>
+  </property>
+
+  <property>
+    <name>tez.task.log.level</name>
+    <value>DEBUG</value>
+  </property>
+
+  <property>
+    <name>tez.am.log.level</name>
+    <value>DEBUG</value>
+  </property>
+
+  <property>
+    <name>tez.task-specific.log.level</name>
+    <value>DEBUG</value>
+  </property>
+
+  <property>
+    <name>tez.am.launch.cluster-default.cmd-opts</name>
+    <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG</value>
+  </property>
+
+  <property>
+    <name>tez.task.launch.cluster-default.cmd-opts</name>
+    <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG</value>
+  </property>
+
+</configuration>

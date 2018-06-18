@@ -5,7 +5,7 @@ services:
     hostname: kerberos.example.com
     entrypoint: /start-kdc.sh
     build:
-      context: .
+      context: dhive/containers/base
       args:
         - http_proxy
         - https_proxy
@@ -20,7 +20,7 @@ services:
     user: hdfs
     entrypoint: /start-namenode.sh
     build:
-      context: .
+      context: dhive/containers/base
       args:
         - http_proxy
         - https_proxy
@@ -34,12 +34,60 @@ services:
     user: hdfs
     entrypoint: /start-datanode.sh
     build:
-      context: .
+      context: dhive/containers/base
       args:
         - http_proxy
         - https_proxy
     volumes:
       - server-keytab:/var/keytabs
+
+  rm:
+    ports:
+      - 8031:8031
+      - 8032:8032
+      - 8088:8088
+    container_name: rm.example
+    hostname: rm.example.com
+    user: hdfs
+    entrypoint: /start-resourcemanager.sh
+    build:
+      context: dhive/containers/base
+      args:
+        - http_proxy
+        - https_proxy
+    volumes:
+      - server-keytab:/var/keytabs
+      - /hadoop
+
+  nm:
+    ports:
+      - 8042:8042
+    container_name: nm1.example
+    hostname: nm1.example.com
+    user: hdfs
+    entrypoint: /start-nodemanager.sh
+    build:
+      context: dhive/containers/base
+      args:
+        - http_proxy
+        - https_proxy
+    volumes:
+      - server-keytab:/var/keytabs
+      - /hadoop
+
+  hs2:
+    container_name: hs2.example
+    hostname: hs2.example.com
+    user: hdfs
+    entrypoint: /start-hive.sh
+    build:
+      context: dhive/containers/base
+      args:
+        - http_proxy
+        - https_proxy
+    volumes:
+      - server-keytab:/var/keytabs
+      - /hadoop
 
   data-populator:
     container_name: data-populator.example
@@ -47,7 +95,20 @@ services:
     user: hdfs
     entrypoint: /populate-data.sh
     build:
-      context: .
+      context: dhive/containers/base
+      args:
+        - http_proxy
+        - https_proxy
+    volumes:
+      - server-keytab:/var/keytabs
+
+  run-install-tez-job:
+    container_name: run-tez.example
+    hostname: run-tez.example.com
+    user: hdfs
+    entrypoint: /run-and-install-tez.sh
+    build:
+      context: dhive/containers/base
       args:
         - http_proxy
         - https_proxy
