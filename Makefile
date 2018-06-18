@@ -6,6 +6,7 @@ assure-all:
 	bash ${SCRIPTS_PATH}/assure_components.sh
 
 all: generate assure-all start
+	echo "External configuration file: ${CONFIG_FILE}"
 
 
 generate:

@@ -35,14 +35,16 @@ make clean
 
 ## Using a local hive or tez distribution
 
-This can be enabled by setting the variables `HIVE_PATH` or `TEZ_PATH`. If we want dhive to also compile and push
-the generated tar to the docker containers the variables `HIVE_COMPILE` and `TEZ_COMPILE` have to be set to `1`,
-for example:
+This can be enabled by setting the variables `HIVE_PATH` or `TEZ_PATH` in `vars.config`. If we want 
+dhive to also compile and push the generated tar to the docker containers the variables 
+`HIVE_COMPILE` and `TEZ_COMPILE` have to be set to `1`, for example:
 ```
 HIVE_COMPILE=1 make clean all
 ```
 
-If `HIVE_PATH` or `TEZ_PATH` are not set dhive will download the release from the version specified in `vars.config`
+If `HIVE_PATH` or `TEZ_PATH` are not set dhive will download the release from the version specified in `vars.config`.
+If `HIVE_PATH` or `TEZ_PATH` are set dhive but not `HIVE_COMPILE` or `TEZ_COMPILE` it won't compile the 
+source code but it will still try to get the tarball from the path
 
 
 ## Run commands in containers
@@ -75,3 +77,13 @@ An example of this is adding a mysql backend for the hivemetastore. It can be ru
 ```
 CONFIG_FILE=vars_mysql.config make all
 ```
+
+## How it works
+The folder `dhive` is formed by the templates. When running:
+```
+make generate
+```
+the real files that will deploy the containers are generated under `build`.
+This accomplishes being able to use global variables across all the files
+and being able to override the properties specified in `vars.config` for the
+configuration files

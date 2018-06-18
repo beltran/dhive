@@ -123,7 +123,7 @@ class Generator(object):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate deployment files')
 
-    if "CONFIG_FILE" in os.environ:
+    if "CONFIG_FILE" in os.environ and os.environ["CONFIG_FILE"]:
         default_config = os.environ["CONFIG_FILE"]
     else:
         default_config = "vars.config"

@@ -19,8 +19,12 @@ if [ "$HIVE_COMPILE" = "1" ]; then
 
     cp $HIVE_PAZ/packaging/target/apache-hive-$HIVE_VERSION-bin.tar.gz hive.tar.gz || { echo 'Copy failed' ; exit 3; }
 else
-    echo "Downloading hive"
-    wget -nc $HIVE_URL -O hive.tar.gz || true
+    if [[ -z "${HIVE_PAZ}" ]]; then
+        echo "Downloading hive"
+        wget -nc $HIVE_URL -O hive.tar.gz || true
+    else
+        cp $HIVE_PAZ/packaging/target/apache-hive-$HIVE_VERSION-bin.tar.gz hive.tar.gz || { echo 'Copy failed' ; exit 3; }
+    fi
 fi
 
 cp hive.tar.gz $BASE_CONTAINER_PATH
