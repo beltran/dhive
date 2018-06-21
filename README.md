@@ -4,12 +4,14 @@ The aim of this proyect is to make it easy to deploy a kerberized stack of hadoo
 
 ## Configure Docker networking
 
-Hadoop requires reverse DNS.  Under docker-compose, we require an external network named "com" 
-for hosts to resolve forward and backwards.
+All the services start in Docker containers which are deployed with docker-compose so both have
+to be installed Hadoop requires reverse DNS.  Under docker-compose, we require an external
+network named "com"  for hosts to resolve forward and backwards.
 
 ```
 docker network create com
 ```
+Probably it's convenient to allow docker more memory/core resources than the defaults.
 
 ## Getting started
 
