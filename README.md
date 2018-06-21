@@ -66,15 +66,19 @@ beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@E
 
 # For example now to activate the whole stack:
 jdbc:hive2://hs2.example.com:10000/>CREATE TABLE pokes (foo INT, bar STRING);
-jdbc:hive2://hs2.example.com:10000/>CREATE TABLE invites (foo INT, bar STRING) PARTITIONED BY (ds STRING);
-jdbc:hive2://hs2.example.com:10000/>SELECT * FROM pokes, invites;
+jdbc:hive2://hs2.example.com:10000/>INSERT INTO pokes(foo, bar) VALUES (1, "1");
 ```
 
 ## Adding services
-That would imply modifying or creating a new `vars.config` file. 
-Then adding a new `SERVICE_NAME.yml` to `dhive/services`. Maybe adding a start script
-to `dhive/scripts`. Maybe overriding or removing some of the properties of the
-configuration files.
+
+Usually the following steps would be taken:
+- Add a new `SERVICE_NAME.yml` to `dhive/services`.
+- Maybe adding a start script to `dhive/scripts`.
+- Maybe creating a new principal in `dhive/scripts/start-kdc.sh`.
+- Maybe overriding or removing some of the properties of the configuration files.
+- Add the new service to `vars.config` or to a different configuration file (it can be
+set with the environment variable `CONFIG_FILE`).
+
 An example of this is adding a mysql backend for the hivemetastore. It can be run with:
 ```
 CONFIG_FILE=vars_mysql.config make all
@@ -88,4 +92,4 @@ make generate
 the real files that will deploy the containers are generated under `build`.
 This accomplishes being able to use global variables across all the files
 and being able to override the properties specified in `vars.config` for the
-configuration files
+configuration files.
