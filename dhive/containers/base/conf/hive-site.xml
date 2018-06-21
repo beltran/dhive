@@ -18,7 +18,10 @@
     <property>
         <name>hive.exec.local.scratchdir</name>
         <value>/hive/tmp/localscratchdir/</value>
-        <description>Local scratch space for Hive jobs</description>
+    </property>
+    <property>
+        <name>hive.scratch.dir.permission</name>
+        <value>777</value>
     </property>
     <property>
         <name>hive.metastore.schema.verification</name>
@@ -56,7 +59,7 @@
     </property>
     <property>
         <name>hive.metastore.kerberos.principal</name>
-        <value>hive/_HOST@EXAMPLE.COM</value>
+        <value>hive_meta/_HOST@EXAMPLE.COM</value>
     </property>
     <property>
         <name>hive.metastore.sasl.enabled</name>
@@ -99,7 +102,7 @@
     </property>
     <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://hs2.example.com:9083</value>
+        <value>thrift://hm.example.com:9083</value>
     </property>
     <property>
         <name>hive.metastore.local</name>
@@ -116,12 +119,6 @@
         <value>100</value>
     </property>
 
-    <!--
-    <property>
-        <name>hive.execution.engine</name>
-        <value>tez</value>
-    </property>
-    -->
     <property>
         <name>hive.server2.thrift.port</name>
         <value>10000</value>
@@ -131,14 +128,9 @@
         <value>tez</value>
     </property>
 
-    <!-- Necessary for authentication between metastore and hiverserver2-->
     <property>
-        <name>hadoop.proxyuser.hive.hosts</name>
-        <value>hs2.example.com</value>
-    </property>
-    <property>
-        <name>hadoop.proxyuser.hive.groups</name>
-        <value>*</value>
+        <name>hive.querylog.location</name>
+        <value>/hive/tmp/</value>
     </property>
 
     <property>
@@ -146,15 +138,26 @@
         <value>/apps/hive/install</value>
     </property>
 
-    <!-- beeline parameters
-    <property>
-        <name>hive.users.in.admin.role</name>
-        <value>hive/hs2.example.com@EXAMPLE.COM</value>
-    </property>
-    -->
     <property>
         <name>hive.tez.container.size</name>
         <value>2048</value>
     </property>
+
+    <property>
+        <name>hive.exec.parallel</name>
+        <value>true</value>
+    </property>
+
+    <!-- Running into HIVE-17286 now -->
+    <property>
+        <name>hive.stats.column.autogather</name>
+        <value>false</value>
+    </property>
+
+    <property>
+        <name>hive.task.progressr</name>
+        <value>true</value>
+    </property>
+
 
 </configuration>

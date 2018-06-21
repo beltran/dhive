@@ -55,11 +55,11 @@
   </property>
   <property>
     <name>dfs.namenode.delegation.token.renew-interval</name>
-    <value>30000</value> <!-- 30 secs -->
+    <value>660000</value> <!-- 30 secs -->
   </property>
   <property>
     <name>dfs.namenode.delegation.key.update-interval</name>
-    <value>30000</value> <!-- 30 secs -->
+    <value>660000</value> <!-- 30 secs -->
   </property>
 
 
@@ -126,5 +126,17 @@
     <name>dfs.web.authentication.kerberos.keytab</name>
     <value>/var/keytabs/hdfs.keytab</value> <!-- path to the HTTP keytab -->
   </property>
+
+
+  <property>
+    <name>dfs.namenode.decommission.interval</name>
+    <value>40</value>
+  </property>
+
+  <property>
+    <name>dfs.client.datanode-restart.timeout</name>
+    <value>40</value>
+  </property>
+
 
 </configuration>

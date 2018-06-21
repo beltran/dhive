@@ -37,8 +37,10 @@ COPY docker_scripts/populate-data.sh /
 COPY docker_scripts/run-and-install-tez.sh /
 COPY docker_scripts/start-kdc.sh /
 COPY docker_scripts/start-hive.sh /
+COPY docker_scripts/start-hive-metastore.sh /
 COPY docker_scripts/sleep.sh /
 COPY conf/hive-site.xml /hadoop/etc/hadoop/
+COPY conf/hivemetastore-site.xml /hadoop/etc/hadoop/
 
 COPY data/people.json /
 COPY data/people.txt /
@@ -47,6 +49,7 @@ COPY data/people.txt /
 ENV TEZ_CONF_DIR=/hadoop/etc/hadoop/
 ENV TEZ_JARS=/tez_jars
 COPY tez.tar.gz /
+COPY tez_up.tar.gz /
 RUN mkdir $TEZ_JARS
 RUN tar -xvzf tez.tar.gz -C $TEZ_JARS
 

@@ -9,6 +9,7 @@ while [ 3 -lt 4 ]
 do
     rm -rf logs/userlogs
     docker cp nm1.example:/hadoop/logs/userlogs/ logs/
+    docker cp rm.example:/hadoop/logs/ logs/
 
     # So chrome opens this as a tex
     for filename in $(find logs/userlogs/ -type f); do
@@ -21,7 +22,7 @@ do
     pull_logs "nm1"
     pull_logs "hs2"
     pull_logs "run-tez"
-    docker cp hs2.example:/hive/tmp/metastore.log logs
+    pull_logs "hm"
 
     sleep 5
 done

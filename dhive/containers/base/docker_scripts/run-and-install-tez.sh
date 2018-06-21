@@ -10,7 +10,7 @@ hdfs dfs -mkdir -p /apps/tez/
 # Assuming a tez tarball generated with something like
 # mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true is on
 # the path
-hadoop fs -copyFromLocal tez.tar.gz /apps/tez/
+hadoop fs -copyFromLocal tez_up.tar.gz /apps/tez/tez.tar.gz
 
 # Set small renewal interval for testing and small lifetime
 #kdestroy -A

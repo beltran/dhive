@@ -30,12 +30,47 @@
 
   <property>
     <name>tez.am.launch.cluster-default.cmd-opts</name>
-    <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG</value>
+    <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG -Xmx3072m</value>
   </property>
 
   <property>
     <name>tez.task.launch.cluster-default.cmd-opts</name>
-    <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG</value>
+    <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG -Xmx3072m</value>
+  </property>
+
+  <property>
+    <name>tez.staging-dir</name>
+    <value>/hive/tez</value>
+  </property>
+
+  <property>
+    <name>tez.am.staging.scratch-data.auto-delete</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>tez.runtime.io.sort.mb</name>
+    <value>4096</value>
+  </property>
+
+  <property>
+    <name>tez.runtime.unordered.output.buffer.size-mb</name>
+    <value>4096</value>
+  </property>
+
+  <property>
+    <name>tez.task.resource.memory.mb</name>
+    <value>1024</value>
+  </property>
+
+  <property>
+    <name>tez.am.resource.memory.mb</name>
+    <value>512</value>
+  </property>
+
+  <property>
+    <name>tez.task.resource.cpu.vcores</name>
+    <value>2</value>
   </property>
 
 </configuration>

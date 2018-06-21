@@ -46,14 +46,15 @@
 
   <property>
     <name>yarn.log-aggregation-enable</name>
-    <value>true</value>
+    <value>false</value>
   </property>
 
   <property>
     <name>yarn.nodemanager.log-aggregation.roll-monitoring-interval-seconds</name>
-    <value>3600</value>
+    <value>360000</value>
   </property>
 
+  <!--
   <property>
     <name>yarn.nodemanager.aux-services</name>
     <value>mapreduce_shuffle</value>
@@ -68,20 +69,149 @@
     <name>yarn.nodemanager.vmem-check-enabled</name>
     <value>false</value>
   </property>
+  -->
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
 
   <property>
+    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+  </property>
+  <property>
     <name>yarn.resourcemanager.delegation.token.max-lifetime</name>
-    <value>30000</value>
+    <value>6600000</value>
   </property>
 
   <property>
     <name>yarn.resourcemanager.delegation.key.update-interval</name>
-    <value>30000</value>
+    <value>6600000</value>
   </property>
 
   <property>
     <name>yarn.resourcemanager.delegation.token.renew-interval</name>
-    <value>30000</value>
+    <value>6600000</value>
+  </property>
+
+  <property>
+    <name>yarn.log.server.url</name>
+    <value>http://rm.example.com:10020/jobhistory/logs</value>
+  </property>
+
+  <property>
+    <name>yarn.timeline-service.hostname</name>
+    <value>rm.example.com</value>
+  </property>
+
+  <property>
+    <name>yarn.timeline-service.keytab</name>
+    <value>/var/keytabs/hdfs.keytab</value>
+  </property>
+
+  <property>
+    <name>yarn.timeline-service.principal</name>
+    <value>yarn/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+      <name>mapreduce.map.memory.mb</name>
+      <value>2048</value>
+  </property>
+  <property>
+      <name>mapreduce.reduce.memory.mb</name>
+      <value>2048</value>
+  </property>
+
+  <property>
+      <name>yarn.nodemanager.resource.memory-mb</name>
+      <value>8096</value>
+  </property>
+
+  <property>
+      <name>yarn.scheduler.minimum-allocation-mb</name>
+      <value>256</value>
+  </property>
+
+  <property>
+      <name>yarn.scheduler.maximum-allocation-mb</name>
+      <value>4096</value>
+  </property>
+
+  <property>
+      <name>mapreduce.map.cpu.vcores</name>
+      <value>2</value>
+  </property>
+
+  <property>
+      <name>mapreduce.reduce.cpu.vcores</name>
+      <value>2</value>
+  </property>
+
+  <property>
+      <name>yarn.nodemanager.disk-health-checker.interval-ms</name>
+      <value>12000000</value>
+  </property>
+
+  <property>
+      <name>mapreduce.framework.name</name>
+      <value>yarn-tez</value>
+  </property>
+
+  <property>
+      <name>yarn.scheduler.capacity.maximum-am-resource-percent</name>
+      <value>100</value>
+  </property>
+
+  <property>
+      <name>yarn.scheduler.capacity.maximum-applications</name>
+      <value>100</value>
+  </property>
+
+    <property>
+      <name>yarn.scheduler.capacity.root.capacity</name>
+      <value>100</value>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.capacity.root.queues</name>
+    <value>default</value>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.capacity.root.default.user-limit-factor</name>
+    <value>100</value>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.capacity.root.default.maximum-capacity</name>
+    <value>100</value>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.capacity.root.default.capacity</name>
+    <value>100</value>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.capacity.default.minimum-user-limit-percent</name>
+    <value>100</value>
+  </property>
+
+  <!-- This two properties are necessary because on our laptop we're likely to exceed the constraints-->
+  <property>
+    <name>yarn.nodemanager.pmem-check-enabled</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.scheduler.class</name>
+    <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
   </property>
 
 </configuration>

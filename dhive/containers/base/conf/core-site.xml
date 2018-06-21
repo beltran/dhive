@@ -31,4 +31,31 @@
     <name>fs.defaultFS</name>
     <value>hdfs://nn.example.com:9000</value>
   </property>
+
+  <!-- Necessary for authentication between metastore and hiverserver2-->
+    <property>
+        <name>hadoop.proxyuser.hive.hosts</name>
+        <value>hs2.example.com,hm.example.com</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.hive.groups</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.hive_meta.hosts</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.hive_meta.groups</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.hdfs.hosts</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.hdfs.groups</name>
+        <value>*</value>
+    </property>
+
 </configuration>

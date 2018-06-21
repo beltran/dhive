@@ -17,8 +17,6 @@ rm:
     - /hadoop
 
 nm:
-  ports:
-    - 8042:8042
   container_name: nm1.example
   hostname: nm1.example.com
   user: hdfs
