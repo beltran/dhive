@@ -1,0 +1,13 @@
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>hive.exec.scratchdir</name>
+        <value>hdfs:///user/hive_meta/tmp/scratchdir</value>
+        <description>Scratch space for Hive jobs</description>
+    </property>
+    <property>
+        <name>hive.exec.local.scratchdir</name>
+        <value>/hive/tmp/localscratchdir_meta/</value>
+        <description>Local scratch space for Hive jobs</description>
+    </property>
+</configuration>
