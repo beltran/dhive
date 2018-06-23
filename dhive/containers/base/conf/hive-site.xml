@@ -98,7 +98,7 @@
     </property>
     <property>
         <name>hive.metastore.warehouse.dir</name>
-        <value>hdfs:///user/hive/tmp/metastore</value>
+        <value>hdfs:///user/hive/warehouse</value>
     </property>
     <property>
         <name>hive.metastore.uris</name>
@@ -155,7 +155,7 @@
     </property>
 
     <property>
-        <name>hive.task.progressr</name>
+        <name>hive.task.progress</name>
         <value>true</value>
     </property>
 

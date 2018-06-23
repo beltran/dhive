@@ -77,11 +77,11 @@ Usually the following steps would be taken:
 - Maybe creating a new principal in `dhive/scripts/start-kdc.sh`.
 - Maybe overriding or removing some of the properties of the configuration files.
 - Add the new service to `vars.config` or to a different configuration file (it can be
-set with the environment variable `CONFIG_FILE`).
+set with the environment variable `DHIVE_CONFIG_FILE`).
 
 An example of this is adding a mysql backend for the hivemetastore. It can be run with:
 ```
-CONFIG_FILE=vars_mysql.config make all
+DHIVE_CONFIG_FILE=vars_mysql.config make all
 ```
 
 ## How it works

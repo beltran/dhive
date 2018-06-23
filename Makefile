@@ -6,13 +6,13 @@ assure-all:
 	bash ${SCRIPTS_PATH}/assure_components.sh
 
 all: generate assure-all start
-	echo "External configuration file: ${CONFIG_FILE}"
+	echo "External configuration file: ${DHIVE_CONFIG_FILE}"
 
 
 generate:
 	python3 dhive.py
 
-stop:
+stop: stop-monitoring
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml down
 
 start: stop start-monitoring

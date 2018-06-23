@@ -1,4 +1,4 @@
-run-install-tez-job:
+run-install-tez:
   container_name: run-tez.example
   hostname: run-tez.example.com
   user: hdfs
