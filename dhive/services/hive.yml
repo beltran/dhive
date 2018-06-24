@@ -1,4 +1,6 @@
 hs2:
+  ports:
+    - 10000:10000
   container_name: hs2.example
   hostname: hs2.example.com
   user: hdfs

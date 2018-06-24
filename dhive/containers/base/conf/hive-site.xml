@@ -160,4 +160,9 @@
     </property>
 
 
+    <property>
+        <name>hive.task.progress</name>
+        <value>true</value>
+    </property>
+
 </configuration>

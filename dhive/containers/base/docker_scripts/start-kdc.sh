@@ -29,10 +29,16 @@
 /usr/sbin/kadmin.local -q "addprinc -randkey hdfs/hs2.example.com"
 /usr/sbin/kadmin.local -q "addprinc -randkey hive/hs2.example.com"
 /usr/sbin/kadmin.local -q "addprinc -randkey hive_meta/hs2.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey HTTP/hs2.example.com"
 
 /usr/sbin/kadmin.local -q "addprinc -randkey hdfs/hm.example.com"
 /usr/sbin/kadmin.local -q "addprinc -randkey hive/hm.example.com"
 /usr/sbin/kadmin.local -q "addprinc -randkey hive_meta/hm.example.com"
+
+/usr/sbin/kadmin.local -q "addprinc -randkey admin/ranger.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey hive/ranger.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey HTTP/ranger.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey lookup/ranger.example.com"
 
 
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hdfs/nn.example.com"
@@ -55,10 +61,16 @@
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hdfs/hs2.example.com"
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive/hs2.example.com"
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive_meta/hs2.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab HTTP/hs2.example.com"
 
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hdfs/hm.example.com"
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive/hm.example.com"
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive_meta/hm.example.com"
+
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab admin/ranger.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive/ranger.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab HTTP/ranger.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab lookup/ranger.example.com"
 
 
 chown hdfs /var/keytabs/hdfs.keytab

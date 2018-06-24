@@ -1,0 +1,18 @@
+ranger:
+  ports:
+    - 6080:6080
+  depends_on:
+    - mysql
+  links:
+    - mysql
+  container_name: ranger.example
+  hostname: ranger.example.com
+  user: hdfs
+  entrypoint: /start-ranger-admin.sh
+  build:
+    context: ./containers/base
+    args:
+      - http_proxy
+      - https_proxy
+  volumes:
+    - server-keytab:/var/keytabs

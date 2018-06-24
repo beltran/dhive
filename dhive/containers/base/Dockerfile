@@ -38,7 +38,10 @@ COPY docker_scripts/run-and-install-tez.sh /
 COPY docker_scripts/start-kdc.sh /
 COPY docker_scripts/start-hive.sh /
 COPY docker_scripts/start-hive-metastore.sh /
+COPY docker_scripts/start-ranger-admin.sh /
+COPY docker_scripts/start-ranger-hive.sh /
 COPY docker_scripts/sleep.sh /
+
 COPY conf/hive-site.xml /hadoop/etc/hadoop/
 COPY conf/hivemetastore-site.xml /hadoop/etc/hadoop/
 
@@ -62,6 +65,10 @@ RUN mkdir $HIVE_HOME/tmp
 RUN tar -xvzf hive.tar.gz -C $HIVE_HOME --strip-components 1
 ENV PATH=$HIVE_HOME/bin:$PATH
 RUN chown -R -L hdfs $HIVE_HOME
+
+# Ranger section
+ADD ranger-{{ ranger_version }}-hive-plugin.tar.gz /
+ADD ranger-{{ ranger_version }}-admin.tar.gz /
 
 #
 ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk

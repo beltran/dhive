@@ -19,6 +19,11 @@ start: stop start-monitoring
 	docker volume rm hadoop-kerberos_server-keytab || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml up -d --force-recreate --build
 
+restart-ranger: generate assure-all
+	docker rm -f ranger.example || true
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build ranger
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 6080:6080 --name ranger.example --detach --entrypoint /start-ranger-admin.sh --rm ranger
+
 restart-hive: generate assure-all
 	docker rm -f hm.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hm
@@ -26,7 +31,7 @@ restart-hive: generate assure-all
 
 	docker rm -f hs2.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hs2
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
 
 pull-logs:
 	bash ${SCRIPTS_PATH}/pull_logs.sh

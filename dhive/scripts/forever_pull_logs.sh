@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+RANGER_VERSION={{ ranger_version }}
+
 pull_logs(){
     echo "Pulling logs from $1"
     docker logs $1.example  &> logs/$1.txt
@@ -23,6 +25,8 @@ do
     pull_logs "hs2"
     pull_logs "run-tez"
     pull_logs "hm"
+
+    [ ! -z "$RANGER_VERSION" ] && docker cp ranger.example:/ranger-$RANGER_VERSION-admin/ews/logs/ranger-admin-ranger-root.log logs/
 
     sleep 5
 done
