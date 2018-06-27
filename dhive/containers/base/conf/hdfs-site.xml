@@ -135,7 +135,7 @@
 
   <property>
     <name>dfs.client.datanode-restart.timeout</name>
-    <value>40</value>
+    <value>40S</value>
   </property>
 
 

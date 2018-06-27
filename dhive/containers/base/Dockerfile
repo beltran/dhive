@@ -18,7 +18,9 @@ RUN chown -R -L hdfs /hadoop
 #RUN chmod 777 -R /tmp && chmod o+t -R /tmp
 #RUN chown -R -L hdfs /hadoop
 
-
+COPY log4j.properties /hadoop/etc/hadoop/
+COPY beeline-log4j2.properties /hadoop/etc/hadoop/
+ENV JAVA_OPTS="-Dlog4j.configuration=file:/hadoop/etc/hadoop/log4j.properties"
 
 COPY conf/core-site.xml /hadoop/etc/hadoop/
 COPY conf/hdfs-site.xml /hadoop/etc/hadoop/

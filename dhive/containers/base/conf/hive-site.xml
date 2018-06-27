@@ -159,10 +159,18 @@
         <value>true</value>
     </property>
 
-
     <property>
         <name>hive.task.progress</name>
         <value>true</value>
     </property>
 
+    <property>
+        <name>hive.server2.logging.operation.enabled</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>hive.server2.logging.operation</name>
+        <value>true</value>
+    </property>
 </configuration>

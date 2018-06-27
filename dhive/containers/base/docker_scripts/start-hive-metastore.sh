@@ -17,7 +17,6 @@ hdfs dfs -mkdir -p /user/hive_meta/tmp
 hdfs dfs -chmod g+w /user/hive_meta/tmp
 hdfs dfs -chown -R hive_meta /user/hive_meta/
 
-
 until kinit -kt /var/keytabs/hdfs.keytab hive_meta/hm.example.com; do sleep 2; done
 
 
@@ -30,4 +29,4 @@ else
     curl -L -o "`pwd`/mysql-connector-java-$MYSQL_VERSION.jar" "https://repo1.maven.org/maven2/mysql/mysql-connector-java/$MYSQL_VERSION/mysql-connector-java-$MYSQL_VERSION.jar"
     export HIVE_CLASSPATH="`pwd`/mysql-connector-java-$MYSQL_VERSION.jar"
 fi
-hive --service metastore --hiveconf hive.root.logger=DEBUG,console
+hive --service metastore --hiveconf hive.root.logger=INFO,console

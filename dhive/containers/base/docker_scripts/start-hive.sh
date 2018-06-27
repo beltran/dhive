@@ -18,12 +18,14 @@ hdfs dfs -copyFromLocal /hive/lib/hive-exec-$HIVE_VERSION.jar $HIVE_DFS_INSTALL
 hdfs dfs -chmod g+w $HIVE_DFS_INSTALL
 hdfs dfs -chown -R hive $HIVE_DFS_INSTALL
 
+hdfs dfs -mkdir -p /ranger/audit/
 hdfs dfs -mkdir -p /user/hive/warehouse
-hdfs dfs -mkdir -p /user/hive/tmp
+hdfs dfs -mkdir -p /user/hive/tmp/scratchdir
 hdfs dfs -mkdir -p /tmp
 
 hdfs dfs -chmod g+w /user/hive/warehouse
 hdfs dfs -chmod g+w /user/hive/tmp
+hdfs dfs -chmod g+w /ranger/audit
 hdfs dfs -chmod 777 /tmp
 hdfs dfs -chown -R hive /user/hive/
 
@@ -37,7 +39,7 @@ export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /tez_jars -name '*.jar')
 
 echo $HIVE_CLASSPATH
 #export HIVE_CLASSPATH=${TEZ_JARS}/*:${TEZ_JARS}/lib/*
-hive --service hiveserver2 --hiveconf hive.root.logger=DEBUG,console
+hive --service hiveserver2 --hiveconf hive.root.logger=INFO,console
 
 # To connect, like done previously in this script
 # beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"

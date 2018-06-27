@@ -10,4 +10,8 @@
         <value>/hive/tmp/localscratchdir_meta/</value>
         <description>Local scratch space for Hive jobs</description>
     </property>
+    <property>
+        <name>hive.metastore.warehouse.external.dir</name>
+        <value>hdfs:///external/</value>
+    </property>
 </configuration>

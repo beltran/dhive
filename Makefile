@@ -33,6 +33,11 @@ restart-hive: generate assure-all
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hs2
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
 
+restart-tez: generate assure-all
+	docker rm -f run-install-tez.example || true
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build run-install-tez
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name run-install-tez.example --detach --entrypoint /run-and-install-tez.sh --rm run-install-tez
+
 pull-logs:
 	bash ${SCRIPTS_PATH}/pull_logs.sh
 

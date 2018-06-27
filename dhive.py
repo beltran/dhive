@@ -26,6 +26,7 @@ class Generator(object):
         self._populate_configuration_module(config, "yarn")
         self._populate_configuration_module(config, "tez")
         self._populate_configuration_module(config, "hive")
+        self._populate_configuration_module(config, "hivemetastore")
 
     def _populate_configuration_module(self, config, service):
         if service in config:

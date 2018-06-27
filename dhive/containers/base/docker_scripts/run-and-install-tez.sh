@@ -5,6 +5,7 @@ until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
 hdfs dfsadmin -safemode wait
 
 
+hdfs dfs -rm -r /apps/tez/
 hdfs dfs -mkdir -p /apps/tez/
 
 # Assuming a tez tarball generated with something like
