@@ -15,6 +15,12 @@ Probably it's convenient to allow docker more memory/core resources than the def
 
 ## Getting started
 
+Python3 has to be installed. To install the requirements:
+
+```
+python -m pip install -r requirements.txt
+```
+
 Running:
 ```
 make all
