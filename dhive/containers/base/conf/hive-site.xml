@@ -59,7 +59,8 @@
     </property>
     <property>
         <name>hive.metastore.kerberos.principal</name>
-        <value>hive_meta/_HOST@EXAMPLE.COM</value>
+        <!-- <value>hive_meta/_HOST@EXAMPLE.COM</value> -->
+        <value>hive/_HOST@EXAMPLE.COM</value>
     </property>
     <property>
         <name>hive.metastore.sasl.enabled</name>

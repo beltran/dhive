@@ -19,9 +19,9 @@ hdfs dfs -mkdir -p /ranger/audit/ /user/hive/warehouse /user/hive/tmp/scratchdir
 hdfs dfs -copyFromLocal /hive/lib/hive-exec-$HIVE_VERSION.jar $HIVE_DFS_INSTALL
 
 hdfs dfs -chmod 700 /user/hive/warehouse
-hdfs dfs -chmod g+w /user/hive/tmp /ranger/audit
+hdfs dfs -chmod g+w /user/hive/tmp
 hdfs dfs -chmod 777 /user/hive/tmp/scratchdir /user/hive/external/ /tmp \
-    /user/hive/tmp/scratchdir/whoever $HIVE_DFS_INSTALL
+    /user/hive/tmp/scratchdir/whoever $HIVE_DFS_INSTALL /ranger/audit
 
 hdfs dfs -chown -R hive /user/hive/ $HIVE_DFS_INSTALL
 
