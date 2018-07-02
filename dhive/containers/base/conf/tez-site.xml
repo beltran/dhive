@@ -28,6 +28,7 @@
     <value>DEBUG</value>
   </property>
 
+  <!--
   <property>
     <name>tez.am.launch.cluster-default.cmd-opts</name>
     <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG -Xmx3072m</value>
@@ -37,6 +38,7 @@
     <name>tez.task.launch.cluster-default.cmd-opts</name>
     <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=DEBUG -Xmx3072m</value>
   </property>
+  -->
 
   <property>
     <name>tez.staging-dir</name>

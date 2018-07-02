@@ -31,6 +31,7 @@ COPY conf/tez-site.xml /hadoop/etc/hadoop/
 COPY env /hadoop/etc/hadoop/
 COPY env /hadoop/etc/hadoop/
 
+COPY docker_scripts/start-llap.sh /
 COPY docker_scripts/start-namenode.sh /
 COPY docker_scripts/start-datanode.sh /
 COPY docker_scripts/start-resourcemanager.sh /

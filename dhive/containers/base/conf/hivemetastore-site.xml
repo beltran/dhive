@@ -12,6 +12,6 @@
     </property>
     <property>
         <name>hive.metastore.warehouse.external.dir</name>
-        <value>hdfs:///external/</value>
+        <value>/user/hive/external/</value>
     </property>
 </configuration>

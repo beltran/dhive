@@ -173,4 +173,5 @@
         <name>hive.server2.logging.operation</name>
         <value>true</value>
     </property>
+
 </configuration>

@@ -38,6 +38,11 @@ restart-tez: generate assure-all
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build run-install-tez
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name run-install-tez.example --detach --entrypoint /run-and-install-tez.sh --rm run-install-tez
 
+restart-llap: generate assure-all
+	docker rm -f llap.example || true
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build llap
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name llap.example --detach --entrypoint /start-llap.sh --rm llap
+
 pull-logs:
 	bash ${SCRIPTS_PATH}/pull_logs.sh
 

@@ -17,7 +17,9 @@ hdfs dfs -mkdir -p /user/hive_meta/tmp
 hdfs dfs -chmod g+w /user/hive_meta/tmp
 hdfs dfs -chown -R hive_meta /user/hive_meta/
 
-until kinit -kt /var/keytabs/hdfs.keytab hive_meta/hm.example.com; do sleep 2; done
+#until kinit -kt /var/keytabs/hdfs.keytab hive_meta/hm.example.com; do sleep 2; done
+# After HIVE-20001 we have to run this with hive user
+until kinit -kt /var/keytabs/hdfs.keytab hive/hm.example.com; do sleep 2; done
 
 
 pushd /hive/tmp

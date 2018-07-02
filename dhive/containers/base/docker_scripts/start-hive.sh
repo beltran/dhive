@@ -13,21 +13,17 @@ until kinit -kt /var/keytabs/hdfs.keytab hdfs/hs2.example.com; do sleep 2; done
 until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
 hdfs dfsadmin -safemode wait
 
-hdfs dfs -mkdir -p $HIVE_DFS_INSTALL
+hdfs dfs -mkdir -p /ranger/audit/ /user/hive/warehouse /user/hive/tmp/scratchdir \
+    /tmp /user/hive/external/ $HIVE_DFS_INSTALL /user/hive/tmp/scratchdir/whoever
+
 hdfs dfs -copyFromLocal /hive/lib/hive-exec-$HIVE_VERSION.jar $HIVE_DFS_INSTALL
-hdfs dfs -chmod g+w $HIVE_DFS_INSTALL
-hdfs dfs -chown -R hive $HIVE_DFS_INSTALL
 
-hdfs dfs -mkdir -p /ranger/audit/
-hdfs dfs -mkdir -p /user/hive/warehouse
-hdfs dfs -mkdir -p /user/hive/tmp/scratchdir
-hdfs dfs -mkdir -p /tmp
+hdfs dfs -chmod 700 /user/hive/warehouse
+hdfs dfs -chmod g+w /user/hive/tmp /ranger/audit
+hdfs dfs -chmod 777 /user/hive/tmp/scratchdir /user/hive/external/ /tmp \
+    /user/hive/tmp/scratchdir/whoever $HIVE_DFS_INSTALL
 
-hdfs dfs -chmod g+w /user/hive/warehouse
-hdfs dfs -chmod g+w /user/hive/tmp
-hdfs dfs -chmod g+w /ranger/audit
-hdfs dfs -chmod 777 /tmp
-hdfs dfs -chown -R hive /user/hive/
+hdfs dfs -chown -R hive /user/hive/ $HIVE_DFS_INSTALL
 
 until kinit -kt /var/keytabs/hdfs.keytab hive/hs2.example.com; do sleep 2; done
 

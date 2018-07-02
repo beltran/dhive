@@ -51,8 +51,19 @@ HIVE_COMPILE=1 make clean all
 ```
 
 If `HIVE_PATH` or `TEZ_PATH` are not set dhive will download the release from the version specified in `vars.config`.
+If won't download it again if it's on the root directory.
 If `HIVE_PATH` or `TEZ_PATH` are set dhive but not `HIVE_COMPILE` or `TEZ_COMPILE` it won't compile the 
-source code but it will still try to get the tarball from the path
+source code but it will still try to get the tarball from the path.
+
+If some changes are made (changes to `vars.config` or to the source code) and we want to redeploy
+ hive/tez/ranger nodes we can do:
+```
+make restart-{hive|tez|ranger}
+```
+If we want to recompile because a change in the source code has been done:
+```
+HIVE_COMPILE make restart-{hive|tez|ranger}
+```
 
 
 ## Run commands in containers

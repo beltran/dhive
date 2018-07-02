@@ -25,6 +25,7 @@ do
     pull_logs "hs2"
     pull_logs "run-tez"
     pull_logs "hm"
+    pull_logs "llap"
 
     [ ! -z "$RANGER_VERSION" ] && docker cp ranger.example:/ranger-$RANGER_VERSION-admin/ews/logs/ranger-admin-ranger-root.log logs/
 
