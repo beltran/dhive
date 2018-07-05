@@ -23,7 +23,7 @@ do
     pull_logs "rm"
     pull_logs "nm1"
     pull_logs "hs2"
-    pull_logs "run-tez"
+    pull_logs "tez"
     pull_logs "hm"
     pull_logs "llap"
 

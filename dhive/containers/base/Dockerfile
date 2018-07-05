@@ -37,7 +37,7 @@ COPY docker_scripts/start-datanode.sh /
 COPY docker_scripts/start-resourcemanager.sh /
 COPY docker_scripts/start-nodemanager.sh /
 COPY docker_scripts/populate-data.sh /
-COPY docker_scripts/run-and-install-tez.sh /
+COPY docker_scripts/install-tez.sh /
 COPY docker_scripts/start-kdc.sh /
 COPY docker_scripts/start-hive.sh /
 COPY docker_scripts/start-hive-metastore.sh /

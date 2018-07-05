@@ -8,4 +8,4 @@ kinit -kt /var/keytabs/hdfs.keytab hdfs/nn.example.com
 # From nn.examples
 cp ./$HADOOP_VERSION/libexec/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VERSION.jar \
     nn.example:hadoop-mapreduce-examples-$HADOOP_VERSION.jar
-hadoop jar hadoop*examples*.jar wordcount /user/ifilonenko/people.txt /user/ifilonenko/output/
+hadoop jar hadoop*examples*.jar wordcount /user/random_user/people.txt /user/random_user/output/

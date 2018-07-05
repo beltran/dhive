@@ -10,12 +10,12 @@ wait_for_hive () {
           break
         fi
         counter=$((counter+1))
-        if [[ "$counter" -gt 10 ]]; then
+        if [[ "$counter" -gt 12 ]]; then
           # Just fail because the port didn't open
           exit 1
         fi
         echo "Waiting for hive port to open"
-        sleep 4
+        sleep 10
     done
 }
 

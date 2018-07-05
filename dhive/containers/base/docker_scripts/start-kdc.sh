@@ -4,8 +4,8 @@
 
 
 ## password only user
-/usr/sbin/kadmin.local -q "addprinc  -randkey ifilonenko"
-/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/ifilonenko.keytab ifilonenko"
+/usr/sbin/kadmin.local -q "addprinc  -randkey random_user"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/random_user.keytab random_user"
 
 /usr/sbin/kadmin.local -q "addprinc -randkey HTTP/server.example.com"
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/server.keytab HTTP/server.example.com"

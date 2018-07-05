@@ -1,8 +1,8 @@
 run-install-tez:
-  container_name: run-tez.example
-  hostname: run-tez.example.com
+  container_name: tez.example
+  hostname: tez.example.com
   user: hdfs
-  entrypoint: /run-and-install-tez.sh
+  entrypoint: /install-tez.sh
   build:
     context: ./containers/base
     args:
