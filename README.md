@@ -98,7 +98,7 @@ set with the environment variable `DHIVE_CONFIG_FILE`).
 
 An example of this is adding a mysql backend for the hivemetastore. It can be run with:
 ```
-DHIVE_CONFIG_FILE=vars_mysql.config make all
+DHIVE_CONFIG_FILE=mysql.config make all
 ```
 
 ## How it works

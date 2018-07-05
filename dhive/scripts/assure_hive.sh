@@ -13,7 +13,7 @@ if [ "$HIVE_COMPILE" = "1" ]; then
     else
         echo "Compiling hive and copying"
         pushd $HIVE_PAZ
-        mvn clean package -T 8 -DskipTests=true -Dmaven.javadoc.skip=true -Pdist || { echo 'Error compiling' ; exit 1; }
+        mvn clean install package -T 8 -DskipTests=true -Dmaven.javadoc.skip=true -Pdist || { echo 'Error compiling' ; exit 1; }
         popd
     fi
 
