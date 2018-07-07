@@ -19,6 +19,6 @@ hadoop fs -copyFromLocal tez_up.tar.gz /apps/tez/tez.tar.gz
 klist -f
 export HADOOP_CLASSPATH=${TEZ_CONF_DIR}:${TEZ_JARS}/*:${TEZ_JARS}/lib/*
 
-hadoop jar $TEZ_JARS/tez-examples-{{ tez_version }}.jar \
-    simplesessionexample hdfs://nn.example.com:9000/user/random_user/people.txt,hdfs://nn.example.com:9000/user/random_user/people.txt \
-    /user/random_user/,/user/random_user/
+# hadoop jar $TEZ_JARS/tez-examples-{{ tez_version }}.jar \
+#    simplesessionexample hdfs://nn.example.com:9000/user/random_user/people.txt,hdfs://nn.example.com:9000/user/random_user/people.txt \
+#    /user/random_user/,/user/random_user/

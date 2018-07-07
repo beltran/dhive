@@ -36,7 +36,7 @@ restart-hive: generate assure-all
 restart-tez: generate assure-all
 	docker rm -f run-install-tez.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build run-install-tez
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name run-install-tez.example --detach --entrypoint /run-and-install-tez.sh --rm run-install-tez
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name install-tez.example --detach --entrypoint /install-tez.sh --rm run-install-tez
 
 restart-llap: generate assure-all
 	docker rm -f llap.example || true
