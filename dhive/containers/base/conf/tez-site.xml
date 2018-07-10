@@ -9,11 +9,6 @@
   </property>
 
   <property>
-    <name>tez.task-specific.log.level</name>
-    <value>DEBUG</value>
-  </property>
-
-  <property>
     <name>tez.task.log.level</name>
     <value>DEBUG</value>
   </property>
