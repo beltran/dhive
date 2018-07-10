@@ -101,6 +101,23 @@ An example of this is adding a mysql backend for the hivemetastore. It can be ru
 DHIVE_CONFIG_FILE=mysql.config make all
 ```
 
+## Running a container with a job
+This can be done to submit a jar to hadoop to run with tez, or to run hive queries, or more generally,
+once the environment is set up, to take actions against it.
+An example of how the first would be done is the file `run_tez_job.config`. It's added like another
+service but it has to start with `external`. Four variables are defined inside the service section:
+* docker: instructions to add to the `Dockerfile`.
+* assure: files to copy to the folder where docker is going to be built.
+* run: script to run inside the container.
+* kerberos: principals to add for kerberos at the running host.
+
+To run this particular example:
+`DHIVE_CONFIG_FILE=run_tez_job.config make all`
+
+This will also generate the script `build/restart-new-service-name` in case we want to tweak something
+in the `.config` file and only restart the new service.
+
+
 ## How it works
 The folder `dhive` is formed by the templates. When running:
 ```
