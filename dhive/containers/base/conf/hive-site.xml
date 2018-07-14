@@ -50,10 +50,6 @@
         <value>/var/keytabs/hdfs.keytab</value>
     </property>
     <property>
-        <name>hive.server2.authentication.kerberos.keytab</name>
-        <value>/var/keytabs/hdfs.keytab</value>
-    </property>
-    <property>
         <name>hive.metastore.kerberos.keytab.file</name>
         <value>/var/keytabs/hdfs.keytab</value>
     </property>
