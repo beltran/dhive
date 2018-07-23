@@ -25,6 +25,11 @@ case $key in
     exit 0
     shift
     ;;
+    *)    # unknown option
+    echo $usage
+    exit 1
+    shift
+    ;;
 esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
