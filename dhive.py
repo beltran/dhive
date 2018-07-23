@@ -2,7 +2,6 @@ import glob
 import configparser
 import os
 import jinja2
-import shutil
 import yaml
 import argparse
 import shutil
