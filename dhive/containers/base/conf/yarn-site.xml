@@ -125,12 +125,12 @@
 
   <property>
       <name>yarn.nodemanager.resource.memory-mb</name>
-      <value>8096</value>
+      <value>32384</value>
   </property>
 
   <property>
       <name>yarn.scheduler.minimum-allocation-mb</name>
-      <value>256</value>
+      <value>512</value>
   </property>
 
   <property>
@@ -140,12 +140,12 @@
 
   <property>
       <name>mapreduce.map.cpu.vcores</name>
-      <value>2</value>
+      <value>1</value>
   </property>
 
   <property>
       <name>mapreduce.reduce.cpu.vcores</name>
-      <value>2</value>
+      <value>1</value>
   </property>
 
   <property>

@@ -3,6 +3,7 @@ rm:
     - 8031:8031
     - 8032:8032
     - 8088:8088
+    - 10020:10020
   container_name: rm.example
   hostname: rm.example.com
   user: hdfs
@@ -17,6 +18,8 @@ rm:
     - /hadoop
 
 nm:
+  ports:
+    - 8042:8042
   container_name: nm1.example
   hostname: nm1.example.com
   user: hdfs

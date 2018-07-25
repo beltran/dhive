@@ -1,6 +1,7 @@
 zk1:
-  container_name: zk1
-  hostname: zk1.example
+  container_name: zk1.example
+  hostname: zk1.example.com
+  entrypoint: /scripts/entry_point.sh
   image: zookeeper
   restart: always
   ports:
@@ -8,5 +9,8 @@ zk1:
   environment:
     ZOO_MY_ID: 1
     ZOO_SERVERS: server.1=0.0.0.0:2888:3888
-  #volumes:
-    #- /containers/zookeeper/conf/zoo.cfg:/conf/zoo.cfg
+  volumes:
+    # - /containers/zookeeper/conf/zoo.cfg:/conf/zoo.cfg
+    - ./containers/zookeeper/scripts/:/scripts
+    - ./containers/zookeeper/conf/:/conf
+    - server-keytab:/var/keytabs

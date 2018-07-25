@@ -14,16 +14,19 @@ until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
 hdfs dfsadmin -safemode wait
 
 hdfs dfs -mkdir -p /ranger/audit/ /user/hive/warehouse /user/hive/tmp/scratchdir \
-    /tmp /user/hive/external/ $HIVE_DFS_INSTALL /user/hive/tmp/scratchdir/whoever
+    /tmp /user/hive/external/ $HIVE_DFS_INSTALL /user/hive/tmp/scratchdir/whoever \
+    /user/yarn/yarn /user/yarn/framework /user/yarn/yarn/services/dhive-llap/
 
 hdfs dfs -copyFromLocal /hive/lib/hive-exec-$HIVE_VERSION.jar $HIVE_DFS_INSTALL
 
 hdfs dfs -chmod 700 /user/hive/warehouse
 hdfs dfs -chmod g+w /user/hive/tmp
 hdfs dfs -chmod 777 /user/hive/tmp/scratchdir /user/hive/external/ /tmp \
-    /user/hive/tmp/scratchdir/whoever $HIVE_DFS_INSTALL /ranger/audit
+    /user/hive/tmp/scratchdir/whoever $HIVE_DFS_INSTALL /ranger/audit \
+    /user/yarn/yarn /user/yarn/framework /user/yarn/yarn/services/dhive-llap/ \
+    /user/yarn/yarn/services
 
-hdfs dfs -chown -R hive /user/hive/ $HIVE_DFS_INSTALL
+hdfs dfs -chown -R hive /user/hive/ $HIVE_DFS_INSTALL /user/yarn/
 
 until kinit -kt /var/keytabs/hdfs.keytab hive/hs2.example.com; do sleep 2; done
 
@@ -35,7 +38,7 @@ export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /tez_jars -name '*.jar')
 
 echo $HIVE_CLASSPATH
 #export HIVE_CLASSPATH=${TEZ_JARS}/*:${TEZ_JARS}/lib/*
-hive --service hiveserver2 --hiveconf hive.root.logger=INFO,console
+HADOOP_CLIENT_OPTS=-Dhive.root.logger=INFO,console hive --service hiveserver2
 
 # To connect, like done previously in this script
 # beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"

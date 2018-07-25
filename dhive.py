@@ -37,7 +37,8 @@ class Generator(object):
             if name == "assure":
                 for file in value.split("\n"):
                     if file:
-                        shutil.copyfile(file, os.path.join(self.CONTAINER_BASE, file))
+                        head, tail = os.path.split(file)
+                        shutil.copyfile(file, os.path.join(self.CONTAINER_BASE, tail))
             elif name == "docker":
                 with open(self.DOCKERFILE, "a") as f:
                     f.write("\n")
@@ -51,7 +52,7 @@ class Generator(object):
 
                 with open(os.path.join(self.DOCKER_SCRIPTS, file_to_run), "w") as f:
 
-                    f.write(value.lstrip("\n"))
+                    f.write(value.replace("\\t", "    ").lstrip("\n"))
                     f.write("\n\n")
 
             # TODO this is appending at the end and it should append it before that
@@ -66,6 +67,7 @@ class Generator(object):
         with open(os.path.join(self.output_dir, "restart-{}.sh".format(service)), "w") as f:
             f.write("#!/bin/bash -x\n")
             f.write("DOCKER_COMPOSE_PATH={}\n".format(self.output_dir))
+            f.write("DHIVE_CONFIG_FILE={} make generate assure-all\n".format(self.config_file))
             f.write("docker rm -f {}.example || true\n".format(service))
             f.write("docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build " + service + "\n")
 

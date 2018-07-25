@@ -28,8 +28,8 @@ COPY conf/ssl-server.xml /hadoop/etc/hadoop/
 COPY conf/yarn-site.xml /hadoop/etc/hadoop/
 COPY conf/tez-site.xml /hadoop/etc/hadoop/
 
-COPY env /hadoop/etc/hadoop/
-COPY env /hadoop/etc/hadoop/
+# COPY env/hadoop-env.sh /hadoop/etc/hadoop/
+COPY env/yarn-env.sh /hadoop/etc/hadoop/
 
 COPY docker_scripts/start-llap.sh /
 COPY docker_scripts/start-namenode.sh /
@@ -78,3 +78,7 @@ ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
 ENV PATH=/hadoop/bin:$PATH
 ENV HADOOP_CONF_DIR=/hadoop/etc/hadoop
 ENV HIVE_CONF_DIR=$HADOOP_CONF_DIR
+
+# TODO: remove this when hadoop is compiled with native sources
+RUN adduser hive
+RUN usermod -a -G hdfs hive

@@ -13,7 +13,7 @@ if [ "$TEZ_COMPILE" = "1" ]; then
     else
         echo "Compiling Tez and copying"
         pushd $TEZ_PAZ
-        mvn clean package -pl '!tez-ui' -DskipTests=true -Dmaven.javadoc.skip=true || { echo 'Error compiling' ; exit 1; }
+        mvn clean package -pl '!tez-ui' -DskipTests=true -Dmaven.javadoc.skip=true -Dhadoop.version={{ hadoop_version }} || { echo 'Error compiling' ; exit 1; }
         popd
     fi
 

@@ -41,8 +41,11 @@
 /usr/sbin/kadmin.local -q "addprinc -randkey lookup/ranger.example.com"
 
 /usr/sbin/kadmin.local -q "addprinc -randkey hive/llap.example.com"
+# Needed for llap
+/usr/sbin/kadmin.local -q "addprinc -randkey hive/nm1.example.com"
 
 /usr/sbin/kadmin.local -q "addprinc -randkey zookeeper/zk1.example.com"
+/usr/sbin/kadmin.local -q "addprinc -randkey hive/zk1.example.com"
 
 # This is a random user who we are giving a keytab. He could be wherever but he'll be in hs2
 /usr/sbin/kadmin.local -q "addprinc -randkey whoever/hs2.example.com"
@@ -79,8 +82,10 @@
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab lookup/ranger.example.com"
 
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive/llap.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive/nm1.example.com"
 
-/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab zookeper/zk1.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab zookeeper/zk1.example.com"
+/usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab hive/zk1.example.com"
 
 /usr/sbin/kadmin.local -q "ktadd -k /var/keytabs/hdfs.keytab whoever/hs2.example.com"
 

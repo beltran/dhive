@@ -15,7 +15,8 @@ if [ "$HIVE_COMPILE" = "1" ]; then
         pushd $HIVE_PAZ
         # mvn clean install package -T 8 -DskipTests=true -Dmaven.javadoc.skip=true -Pdist || { echo 'Error compiling' ; exit 1; }
         mvn clean install -Pdist -DskipTests -Dpackaging.minimizeJar=false -T 1C \
-            -DskipShade -Dremoteresources.skip=true -Dmaven.javadoc.skip=true || { echo 'Error compiling' ; exit 1; }
+            -DskipShade -Dremoteresources.skip=true -Dmaven.javadoc.skip=true \
+            -Dhadoop.version={{ hadoop_version }} || { echo 'Error compiling' ; exit 1; }
         popd
     fi
 

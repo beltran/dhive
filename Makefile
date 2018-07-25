@@ -2,12 +2,11 @@
 DOCKER_COMPOSE_PATH=build
 SCRIPTS_PATH=${DOCKER_COMPOSE_PATH}/scripts
 
-assure-all:
+assure-all: generate
 	bash ${SCRIPTS_PATH}/assure_components.sh
 
 all: generate assure-all start
 	echo "External configuration file: ${DHIVE_CONFIG_FILE}"
-
 
 generate:
 	python3 dhive.py
@@ -19,12 +18,12 @@ start: stop start-monitoring
 	docker volume rm hadoop-kerberos_server-keytab || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml up -d --force-recreate --build
 
-restart-ranger: generate assure-all
+restart-ranger: assure-all
 	docker rm -f ranger.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build ranger
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 6080:6080 --name ranger.example --detach --entrypoint /start-ranger-admin.sh --rm ranger
 
-restart-hive: generate assure-all
+restart-hive: assure-all
 	docker rm -f hm.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hm
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name hm.example --detach --entrypoint /start-hive-metastore.sh --rm hm
@@ -33,15 +32,20 @@ restart-hive: generate assure-all
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hs2
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
 
-restart-tez: generate assure-all
+restart-tez: assure-all
 	docker rm -f tez.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build tez
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name tez.example --detach --entrypoint /install-tez.sh --rm tez
 
-restart-llap: generate assure-all
+restart-llap: assure-all
 	docker rm -f llap.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build llap
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name llap.example --detach --entrypoint /start-llap.sh --rm llap
+
+restart-zookeeper: assure-all
+	docker rm -f zk1.example || true
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build zk1
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name zk1.example --detach --entrypoint /scripts/entry_point.sh --rm zk1
 
 pull-logs:
 	bash ${SCRIPTS_PATH}/pull_logs.sh

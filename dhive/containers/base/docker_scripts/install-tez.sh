@@ -8,10 +8,19 @@ hdfs dfsadmin -safemode wait
 hdfs dfs -rm -r /apps/tez/
 hdfs dfs -mkdir -p /apps/tez/
 
+# sudo mkdir tez_temp
+# sudo chmod 777 tez_temp/
+# tar -xvzf tez_up.tar.gz -C tez_temp
+# pushd tez_temp/
+# cp /hadoop/share/hadoop/common/hadoop-common-{{ hadoop_version }}.jar .
+# sudo tar czf /../tez.tar.gz *
+# popd
+# sudo rm -rf tez_temp
+
 # Assuming a tez tarball generated with something like
 # mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true is on
 # the path
-hadoop fs -copyFromLocal tez_up.tar.gz /apps/tez/tez.tar.gz
+hdfs dfs -copyFromLocal tez_up.tar.gz /apps/tez/tez.tar.gz
 
 # Set small renewal interval for testing and small lifetime
 #kdestroy -A

@@ -171,4 +171,9 @@
         <value>true</value>
     </property>
 
+    <property>
+        <name>hive.cluster.delegation.token.store.zookeeper.acl</name>
+        <value></value>
+    </property>
+
 </configuration>

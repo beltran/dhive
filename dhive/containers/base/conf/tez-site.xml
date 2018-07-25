@@ -10,17 +10,17 @@
 
   <property>
     <name>tez.task.log.level</name>
-    <value>DEBUG</value>
+    <value>INFO</value>
   </property>
 
   <property>
     <name>tez.am.log.level</name>
-    <value>DEBUG</value>
+    <value>INFO</value>
   </property>
 
   <property>
     <name>tez.task-specific.log.level</name>
-    <value>DEBUG</value>
+    <value>INFO</value>
   </property>
 
   <!--
@@ -47,12 +47,12 @@
 
   <property>
     <name>tez.runtime.io.sort.mb</name>
-    <value>4096</value>
+    <value>6144</value>
   </property>
 
   <property>
     <name>tez.runtime.unordered.output.buffer.size-mb</name>
-    <value>4096</value>
+    <value>6144</value>
   </property>
 
   <property>
@@ -67,7 +67,7 @@
 
   <property>
     <name>tez.task.resource.cpu.vcores</name>
-    <value>2</value>
+    <value>4</value>
   </property>
 
 </configuration>
