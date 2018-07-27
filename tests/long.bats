@@ -31,6 +31,31 @@ wait_for_ranger() {
     done
 }
 
+wait_for_llap() {
+  counter=0
+    while [ 1 ]
+    do
+      # The or is because this command might return 1, which will make bats fail
+      var=`docker logs llap.example 2>&1 | grep sleep.sh` || true
+      if [ -z "$var" ]
+      then
+        echo "Llap installation hasn't yet finished"
+      else
+        echo "Llap installation has finished"
+        break
+      fi
+
+      counter=$((counter+1))
+      if [[ "$counter" -gt 16 ]]; then
+        # Just fail because the port didn't open
+        echo "Waited for 8 minutes for llap to get installed and it didn't happen"
+        exit 1
+      fi
+      echo "Waiting for llap installation"
+      sleep 30
+    done
+}
+
 wait_for_hdfs() {
   docker cp tests/docker_scripts/wait_for_hdfs.sh nn.example:/
   docker exec -it nn.example /wait_for_hdfs.sh
@@ -89,5 +114,17 @@ test_hive () {
 
   test_hdfs
   wait_for_ranger
+  test_hive
+}
+
+@test "test_llap_vars_file" {
+  teardown () {
+    DHIVE_CONFIG_FILE=vars_llap.config make dclean
+  }
+
+  DHIVE_CONFIG_FILE=vars_llap.config make dclean all
+
+  test_hdfs
+  wait_for_llap
   test_hive
 }
