@@ -96,10 +96,10 @@ test_hive () {
 
 @test "test_mysql_vars_file" {
   teardown () {
-    DHIVE_CONFIG_FILE=mysql.config make dclean
+    DHIVE_CONFIG_FILE=config/mysql.cfg make dclean
   }
 
-  DHIVE_CONFIG_FILE=mysql.config make dclean all
+  DHIVE_CONFIG_FILE=config/mysql.cfg make dclean all
 
   test_hdfs
   test_hive
@@ -107,10 +107,10 @@ test_hive () {
 
 @test "test_rangers_vars_file" {
   teardown () {
-    DHIVE_CONFIG_FILE=ranger.config make dclean
+    DHIVE_CONFIG_FILE=config/ranger.cfg make dclean
   }
 
-  DHIVE_CONFIG_FILE=ranger.config make dclean all
+  DHIVE_CONFIG_FILE=config/ranger.cfg make dclean all
 
   test_hdfs
   wait_for_ranger
@@ -119,10 +119,10 @@ test_hive () {
 
 @test "test_llap_vars_file" {
   teardown () {
-    DHIVE_CONFIG_FILE=vars_llap.config make dclean
+    DHIVE_CONFIG_FILE=config/llap.cfg make dclean
   }
 
-  DHIVE_CONFIG_FILE=vars_llap.config make dclean all
+  DHIVE_CONFIG_FILE=config/llap.cfg make dclean all
 
   test_hdfs
   wait_for_llap

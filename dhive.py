@@ -205,7 +205,7 @@ if __name__ == "__main__":
     if "DHIVE_CONFIG_FILE" in os.environ and os.environ["DHIVE_CONFIG_FILE"]:
         default_config = os.environ["DHIVE_CONFIG_FILE"]
     else:
-        default_config = "vars.config"
+        default_config = "config/vars.cfg"
 
     parser.add_argument('--config-file', type=str, default=default_config, help="config file")
     parser.add_argument('--output-dir', type=str, default="build", help="directory where the files are generated")

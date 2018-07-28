@@ -28,10 +28,10 @@ make all
 
 This will:
 - Start several services in docker images: keberos, hadoop, yarn, tez, hive or other services
-depending on what's defined on `vars.config`
+depending on what's defined on `config/vars.cfg`
 - Pull relevant logs from the docker images which can be seen at `http:localhost:8000`
 
-The file `vars.config` holds the values for:
+The file `config/vars.cfg` holds the values for:
 - The version values for hadoop, hive, tez. 
 - The services that will be running.
 - Properties that will be overriden for core-site.xml, hdfs-site.xml, yarn-site.xml, tez-site.xml and hive-site.xml.
@@ -43,19 +43,19 @@ make clean
 
 ## Using a local hive or tez distribution
 
-This can be enabled by setting the variables `HIVE_PATH` or `TEZ_PATH` in `vars.config`. If we want 
+This can be enabled by setting the variables `HIVE_PATH` or `TEZ_PATH` in `config/vars.cfg`. If we want 
 dhive to also compile and push the generated tar to the docker containers the variables 
 `HIVE_COMPILE` and `TEZ_COMPILE` have to be set to `1`, for example:
 ```
 HIVE_COMPILE=1 make clean all
 ```
 
-If `HIVE_PATH` or `TEZ_PATH` are not set dhive will download the release from the version specified in `vars.config`.
+If `HIVE_PATH` or `TEZ_PATH` are not set dhive will download the release from the version specified in `config/vars.cfg`.
 If won't download it again if it's on the root directory.
 If `HIVE_PATH` or `TEZ_PATH` are set dhive but not `HIVE_COMPILE` or `TEZ_COMPILE` it won't compile the 
 source code but it will still try to get the tarball from the path.
 
-If some changes are made (changes to `vars.config` or to the source code) and we want to redeploy
+If some changes are made (changes to `config/vars.cfg` or to the source code) and we want to redeploy
  hive/tez/ranger nodes we can do:
 ```
 make restart-{hive|tez|ranger}
@@ -93,18 +93,18 @@ Usually the following steps would be taken:
 - Maybe adding a start script to `dhive/scripts`.
 - Maybe creating a new principal in `dhive/scripts/start-kdc.sh`.
 - Maybe overriding or removing some of the properties of the configuration files.
-- Add the new service to `vars.config` or to a different configuration file (it can be
+- Add the new service to `config/vars.cfg` or to a different configuration file (it can be
 set with the environment variable `DHIVE_CONFIG_FILE`).
 
 An example of this is adding a mysql backend for the hivemetastore. It can be run with:
 ```
-DHIVE_CONFIG_FILE=mysql.config make all
+DHIVE_CONFIG_FILE=config/mysql.cfg make all
 ```
 
 ## Running a container with a job
 This can be done to submit a jar to hadoop to run with tez, or to run hive queries, or more generally,
 once the environment is set up, to take actions against it.
-An example of how the first would be done is the file `run_tez_job.config`. It's added like another
+An example of how the first would be done is the file `config/run_tez_job.cfg`. It's added like another
 service but it has to start with `external`. Four variables are defined inside the service section:
 * docker: instructions to add to the `Dockerfile`.
 * assure: files to copy to the folder where docker is going to be built.
@@ -112,11 +112,14 @@ service but it has to start with `external`. Four variables are defined inside t
 * kerberos: principals to add for kerberos at the running host.
 
 To run this particular example:
-`DHIVE_CONFIG_FILE=run_tez_job.config make all`
+`DHIVE_CONFIG_FILE=config/run_tez_job.cfg make all`
 
 This will also generate the script `build/restart-new-service-name` in case we want to tweak something
-in the `.config` file and only restart the new service.
+in the `.cfg` file and only restart the new service.
 
+
+## LLAP
+LLAP can be deployed with the config file `config/llap.cfg`.
 
 ## How it works
 The folder `dhive` is formed by the templates. When running:
@@ -125,5 +128,5 @@ make generate
 ```
 the real files that will deploy the containers are generated under `build`.
 This accomplishes being able to use global variables across all the files
-and being able to override the properties specified in `vars.config` for the
+and being able to override the properties specified in `config/vars.cfg` for the
 configuration files.
