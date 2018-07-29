@@ -4,12 +4,14 @@ HIVE_VERSION={{ hive_version }}
 HIVE_DFS_INSTALL=/apps/hive/install
 MYSQL_VERSION={{ mysql_connector_version }}
 RANGER_VERSION={{ ranger_version }}
+source /common.sh
 
 if [[ -z "${HIVE_HOME}" ]]; then
     exit 1
 fi
 
-until kinit -kt /var/keytabs/hdfs.keytab hdfs/hs2.example.com; do sleep 2; done
+kerberos_auth hdfs/hs2.example.com
+
 until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
 hdfs dfsadmin -safemode wait
 
@@ -28,7 +30,7 @@ hdfs dfs -chmod 777 /user/hive/tmp/scratchdir /user/hive/external/ /tmp \
 
 hdfs dfs -chown -R hive /user/hive/ $HIVE_DFS_INSTALL /user/yarn/
 
-until kinit -kt /var/keytabs/hdfs.keytab hive/hs2.example.com; do sleep 2; done
+kerberos_auth hive/hs2.example.com
 
 # If ranger available activate it for hive
 [ ! -z "$RANGER_VERSION" ] && bash -x /start-ranger-hive.sh

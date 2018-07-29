@@ -1,6 +1,7 @@
 #! /bin/bash
 
-until kinit -kt /var/keytabs/hdfs.keytab hdfs/rm.example.com; do sleep 2; done
+source /common.sh
+kerberos_auth hdfs/rm.example.com
 
 echo "KDC is up and ready to go... starting up resource manager"
 

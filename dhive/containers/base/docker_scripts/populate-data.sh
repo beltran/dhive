@@ -1,8 +1,7 @@
 #! /bin/bash
 
-
-
-until kinit -kt /var/keytabs/hdfs.keytab hdfs/nn.example.com; do sleep 2; done
+source /common.sh
+kerberos_auth hdfs/nn.example.com
 
 until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
 

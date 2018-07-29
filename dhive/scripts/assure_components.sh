@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -x
 
 SCRIPTS_PATH=build/scripts
 HADOOP_VERSION={{ hadoop_version }}
@@ -39,6 +39,7 @@ assure_ranger() {
 assure_tez() {
     if [[ -z "${TEZ_VERSION}" ]]; then
         tar -zcvf $BASE_CONTAINER_PATH/tez.tar.gz ./LICENSE
+        tar -zcvf $BASE_CONTAINER_PATH/tez_up.tar.gz ./LICENSE
         return 0;
     fi
     if [ ! -f $SCRIPTS_PATH/assure_tez.sh ]; then

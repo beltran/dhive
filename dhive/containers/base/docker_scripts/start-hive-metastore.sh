@@ -7,8 +7,9 @@ MYSQL_VERSION={{ mysql_connector_version }}
 if [[ -z "${HIVE_HOME}" ]]; then
     exit 1
 fi
+source /common.sh
+kerberos_auth hdfs/hm.example.com
 
-until kinit -kt /var/keytabs/hdfs.keytab hdfs/hm.example.com; do sleep 2; done
 until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
 hdfs dfsadmin -safemode wait
 
@@ -19,7 +20,7 @@ hdfs dfs -chown -R hive_meta /user/hive_meta/
 
 #until kinit -kt /var/keytabs/hdfs.keytab hive_meta/hm.example.com; do sleep 2; done
 # After HIVE-20001 we have to run this with hive user
-until kinit -kt /var/keytabs/hdfs.keytab hive/hm.example.com; do sleep 2; done
+kerberos_auth hive/hm.example.com
 
 
 pushd /hive/tmp

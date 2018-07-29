@@ -1,6 +1,7 @@
 #! /bin/bash
 
-until kinit -kt /var/keytabs/hdfs.keytab hdfs/nm1.example.com; do sleep 2; done
+source /common.sh
+kerberos_auth hdfs/nm1.example.com
 
 echo "KDC is up and ready to go... starting up node manager"
 

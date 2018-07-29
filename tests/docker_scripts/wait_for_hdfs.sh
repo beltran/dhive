@@ -10,12 +10,13 @@ wait_for_hdfs () {
           break
         fi
         counter=$((counter+1))
-        if [[ "$counter" -gt 10 ]]; then
+        if [[ "$counter" -gt 20 ]]; then
           # Just fail because the port didn't open
+          echo "Port never opened"
           exit 1
         fi
         echo "Waiting for hdfs port to open"
-        sleep 4
+        sleep 5
     done
 }
 

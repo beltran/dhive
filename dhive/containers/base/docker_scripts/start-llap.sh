@@ -1,6 +1,7 @@
 #!/bin/bash -x
 
-until kinit -kt /var/keytabs/hdfs.keytab hive/llap.example.com; do sleep 2; done
+source /common.sh
+kerberos_auth hive/llap.example.com
 
 mkdir -p /hive/llap
 pushd /hive/llap

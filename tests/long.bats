@@ -75,12 +75,24 @@ beeline_exec() {
   docker exec -it hs2.example beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/_HOST@EXAMPLE.COM;hive.server2.proxy.user=hive" -e \""$1"\"
 }
 
+beeline_exec_no_auth() {
+  docker exec -it hs2.example beeline -u "jdbc:hive2://127.0.0.1:10000/;hive.server2.proxy.user=hive" -e \""$1"\"
+}
+
 test_hive () {
     wait_for_hive
     beeline_exec 'CREATE DATABASE batsDB;'
     beeline_exec 'CREATE TABLE batsDB.batsTB(a int, b int);'
     beeline_exec 'INSERT INTO batsDB.batsTB(a, b) VALUES (2, 3);'
     beeline_exec 'SELECT * FROM batsDB.batsTB;'
+}
+
+test_hive_no_auth () {
+    wait_for_hive
+    beeline_exec_no_auth 'CREATE DATABASE batsDB;'
+    beeline_exec_no_auth 'CREATE TABLE batsDB.batsTB(a int, b int);'
+    beeline_exec_no_auth 'INSERT INTO batsDB.batsTB(a, b) VALUES (2, 3);'
+    beeline_exec_no_auth 'SELECT * FROM batsDB.batsTB;'
 }
 
 @test "test_default_vars_file" {
@@ -94,15 +106,15 @@ test_hive () {
   test_hive
 }
 
-@test "test_mysql_vars_file" {
+@test "test_no_auth_file" {
   teardown () {
-    DHIVE_CONFIG_FILE=config/mysql.cfg make dclean
+    DHIVE_CONFIG_FILE=config/simple_auth.cfg make dclean
   }
 
-  DHIVE_CONFIG_FILE=config/mysql.cfg make dclean all
+  DHIVE_CONFIG_FILE=config/simple_auth.cfg make dclean all
 
   test_hdfs
-  test_hive
+  test_hive_no_auth
 }
 
 @test "test_rangers_vars_file" {

@@ -1,4 +1,6 @@
 hm:
+  ports:
+    - 9083:9083
   container_name: hm.example
   hostname: hm.example.com
   user: hdfs

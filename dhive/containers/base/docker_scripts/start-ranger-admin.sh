@@ -97,7 +97,9 @@ pushd /hive
 # Web login: username, password = admin, 12345678a
 # jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM
 
-until kinit -kt /var/keytabs/hdfs.keytab admin/ranger.example.com; do sleep 2; done
+source /common.sh
+kerberos_auth admin/ranger.example.com
+
 curl --cookie-jar cook --negotiate -u :  'http://ranger.example.com:6080/service/plugins/services'
 session_id=`cat cook | grep RANGERADMINSESSIONID | awk '{print $7}'`
 

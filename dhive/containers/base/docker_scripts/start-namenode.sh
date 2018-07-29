@@ -1,6 +1,8 @@
 #! /bin/bash
 
-until kinit -kt /var/keytabs/hdfs.keytab hdfs/nn.example.com; do sleep 2; done
+source /common.sh
+kerberos_auth hdfs/nn.example.com
+create_keystore_if_no_kerberos
 
 echo "KDC is up and ready to go... starting up name node"
 
