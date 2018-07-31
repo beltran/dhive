@@ -30,4 +30,4 @@ else
     fi
 fi
 
-cp hive.tar.gz $BASE_CONTAINER_PATH
+cp hive.tar.gz $BASE_CONTAINER_PATH || { echo 'Copy failed' ; exit 3; }

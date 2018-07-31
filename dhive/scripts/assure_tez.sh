@@ -12,7 +12,7 @@ if [ "$TEZ_COMPILE" = "1" ]; then
         exit 2
     else
         echo "Compiling Tez and copying"
-        pushd $TEZ_PAZ
+        pushd $TEZ_PAZ || {echo "$TEZ_PATH doesn't exist"; exit 1}
         mvn clean package -pl '!tez-ui' -DskipTests=true -Dmaven.javadoc.skip=true -Dhadoop.version={{ hadoop_version }} || { echo 'Error compiling' ; exit 1; }
         popd
     fi
@@ -42,5 +42,5 @@ else
     fi
 fi
 
-cp tez.tar.gz $BASE_CONTAINER_PATH
-cp tez_up.tar.gz $BASE_CONTAINER_PATH
+cp tez.tar.gz $BASE_CONTAINER_PATH || { echo 'Copy failed' ; exit 3; }
+cp tez_up.tar.gz $BASE_CONTAINER_PATH || { echo 'Copy failed' ; exit 3; }
