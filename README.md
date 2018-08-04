@@ -126,6 +126,10 @@ LLAP can be deployed with the config file `config/llap.cfg`.
 Ranger can be deployed and integrated with hive with the config file `config/ranger.cfg`.
 
 
+## AWS
+Sample configuration that show how write tables in s3 can be found in `config/aws.cfg`.
+
+
 ## How it works
 The folder `dhive` is formed by the templates. When running:
 ```
