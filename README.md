@@ -62,7 +62,7 @@ make restart-{hive|tez|ranger}
 ```
 If we want to recompile because a change in the source code has been done:
 ```
-HIVE_COMPILE make restart-{hive|tez|ranger}
+HIVE_COMPILE=1 make restart-{hive|tez|ranger}
 ```
 
 
@@ -120,6 +120,11 @@ in the `.cfg` file and only restart the new service.
 
 ## LLAP
 LLAP can be deployed with the config file `config/llap.cfg`.
+
+
+## Ranger
+Ranger can be deployed and integrated with hive with the config file `config/ranger.cfg`.
+
 
 ## How it works
 The folder `dhive` is formed by the templates. When running:

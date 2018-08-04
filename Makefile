@@ -23,11 +23,14 @@ restart-ranger: assure-all
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build ranger
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 6080:6080 --name ranger.example --detach --entrypoint /start-ranger-admin.sh --rm ranger
 
-restart-hive: assure-all
+restart-hive: restart-hive-server restart-hive-meta
+
+restart-hive-meta: assure-all
 	docker rm -f hm.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hm
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name hm.example --detach --entrypoint /start-hive-metastore.sh --rm hm
 
+restart-hive-server: assure-all
 	docker rm -f hs2.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hs2
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2

@@ -37,6 +37,9 @@ kerberos_auth hive/hs2.example.com
 
 # Add Tez jars to the classpath
 export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /tez_jars -name '*.jar')
+export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /hadoop/share/hadoop/tools/lib -name '*.jar')
+
+# cp /hadoop/share/hadoop/tools/lib/* /hadoop/share/hadoop/common/lib/
 
 echo $HIVE_CLASSPATH
 #export HIVE_CLASSPATH=${TEZ_JARS}/*:${TEZ_JARS}/lib/*

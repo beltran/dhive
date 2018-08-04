@@ -32,4 +32,8 @@ else
     curl -L -o "`pwd`/mysql-connector-java-$MYSQL_VERSION.jar" "https://repo1.maven.org/maven2/mysql/mysql-connector-java/$MYSQL_VERSION/mysql-connector-java-$MYSQL_VERSION.jar"
     export HIVE_CLASSPATH="`pwd`/mysql-connector-java-$MYSQL_VERSION.jar"
 fi
-hive --service metastore --hiveconf hive.root.logger=INFO,console
+
+export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /hadoop/share/hadoop/tools/lib -name '*.jar')
+
+HADOOP_CLIENT_OPTS=-Dhive.root.logger=console hive --service metastore
+/sleep.sh

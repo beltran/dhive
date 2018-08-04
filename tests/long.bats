@@ -21,9 +21,9 @@ wait_for_ranger() {
       fi
 
       counter=$((counter+1))
-      if [[ "$counter" -gt 16 ]]; then
+      if [[ "$counter" -gt 24 ]]; then
         # Just fail because the port didn't open
-        echo "Waited for 8 minutes for hive to sync and it didn't happen"
+        echo "Waited for 12 minutes for hive to sync and it didn't happen"
         exit 1
       fi
       echo "Waiting for hive to sync with ranger"
