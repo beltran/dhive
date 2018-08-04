@@ -12,7 +12,8 @@ fi
 
 kerberos_auth hdfs/hs2.example.com
 
-until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
+wait_for_nn
+
 hdfs dfsadmin -safemode wait
 
 hdfs dfs -mkdir -p /ranger/audit/ /user/hive/warehouse /user/hive/tmp/scratchdir \

@@ -10,7 +10,8 @@ fi
 source /common.sh
 kerberos_auth hdfs/hm.example.com
 
-until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
+wait_for_nn
+
 hdfs dfsadmin -safemode wait
 
 hdfs dfs -mkdir -p /user/hive_meta/tmp
