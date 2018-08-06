@@ -44,7 +44,7 @@ export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /hadoop/share/hadoop/tools/lib -nam
 
 echo $HIVE_CLASSPATH
 #export HIVE_CLASSPATH=${TEZ_JARS}/*:${TEZ_JARS}/lib/*
-HADOOP_CLIENT_OPTS=-Dhive.root.logger=INFO,console hive --service hiveserver2
+HADOOP_CLIENT_OPTS=-Dhive.root.logger=console hive --service hiveserver2
 
 # To connect, like done previously in this script
 # beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"
