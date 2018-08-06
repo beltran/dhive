@@ -46,11 +46,11 @@ echo $HIVE_CLASSPATH
 #export HIVE_CLASSPATH=${TEZ_JARS}/*:${TEZ_JARS}/lib/*
 HADOOP_CLIENT_OPTS=-Dhive.root.logger=console hive --service hiveserver2
 
-# To connect, like done previously in this script
+# To connect and excute some queries:
 # beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"
 
 # jdbc:hive2://hs2.example.com:10000/>CREATE TABLE pokes (foo INT, bar STRING);
-# jdbc:hive2://hs2.example.com:10000/>CREATE TABLE invites (foo INT, bar STRING) PARTITIONED BY (ds STRING);
-# jdbc:hive2://hs2.example.com:10000/>SELECT * FROM pokes, invites;
+# jdbc:hive2://hs2.example.com:10000/>INSERT INTO pokes VALUES (1, "1");
+# jdbc:hive2://hs2.example.com:10000/>SELECT * FROM pokes;
 
 /sleep.sh

@@ -84,7 +84,19 @@ beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@E
 # For example now to activate the whole stack:
 jdbc:hive2://hs2.example.com:10000/>CREATE TABLE pokes (foo INT, bar STRING);
 jdbc:hive2://hs2.example.com:10000/>INSERT INTO pokes(foo, bar) VALUES (1, "1");
+jdbc:hive2://hs2.example.com:10000/>SELECT * from pokes;
 ```
+
+## Running a different `.cfg` file
+
+By default `config/vars.cfg` will be used but other configurations are available in the `config` folder.
+They can be run setting the `DHIVE_CONFIG_FILE` environment variable, for example:
+```
+DHIVE_CONFIG_FILE=config/spark.cfg make clean all
+HIVE_COMPILE=1 DHIVE_CONFIG_FILE=config/spark.cfg make restart-hive-server
+```
+are valid commands. To see what services a particular configuration file is going to deploy the easiest
+way to see it is to check the `[services]` section in the file.
 
 ## Adding services
 
@@ -128,6 +140,11 @@ Ranger can be deployed and integrated with hive with the config file `config/ran
 
 ## AWS
 Sample configuration that show how write tables in s3 can be found in `config/aws.cfg`.
+
+
+## Spark
+An example of how to run a spark job against hive is shown in `config/spark.cfg`. In a similar
+way it can be done against a LLAP setup.
 
 
 ## How it works
