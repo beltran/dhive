@@ -12,10 +12,10 @@ BUILD_PATH=build
 BASE_CONTAINER_PATH=build/containers/base
 
 RANGER_PATH={{ ranger_path }}
+HADOOP={{no_hadoop}}
 
 
 assure_hadoop() {
-    # Download only if the file doesn't exist
     wget -nc $HADOOP_URL
     cp hadoop-$HADOOP_VERSION.tar.gz $BASE_CONTAINER_PATH
 }
