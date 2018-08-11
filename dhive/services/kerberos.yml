@@ -1,4 +1,6 @@
 kerberos:
+  ports:
+    - 88:88
   container_name: kerberos.example
   hostname: kerberos.example.com
   entrypoint: /start-kdc.sh

@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
 KERBEROS={{kerberos}}
+HADOOP={{no_hadoop}}
 SKIP_KERBEROS=0
+SKIP_HADOOP=0
+
 if [ "$KERBEROS" = "no_kerberos" ]; then
   SKIP_KERBEROS=1
+fi
+
+if [ "$HADOOP" = "no_hadoop" ]; then
+  SKIP_HADOOP=1
 fi
 
 kerberos_auth () {
@@ -33,5 +40,7 @@ auth_until_success () {
 }
 
 wait_for_nn () {
-    until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
+    if [ "$SKIP_HADOOP" = "0" ]; then
+        until (echo > /dev/tcp/nn.example.com/9000) >/dev/null 2>&1; do sleep 2; done
+    fi
 }
