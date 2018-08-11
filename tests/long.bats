@@ -117,6 +117,17 @@ test_hive_no_auth () {
   test_hive_no_auth
 }
 
+@test "test_mysql_vars_file" {
+  teardown () {
+    DHIVE_CONFIG_FILE=config/mysql.cfg make dclean
+  }
+
+  DHIVE_CONFIG_FILE=config/mysql.cfg make dclean all
+
+  test_hdfs
+  test_hive_no_auth
+}
+
 @test "test_rangers_vars_file" {
   teardown () {
     DHIVE_CONFIG_FILE=config/ranger.cfg make dclean
