@@ -69,6 +69,7 @@ test_hdfs () {
 wait_for_hive() {
   docker cp tests/docker_scripts/wait_for_hive.sh hs2.example:/
   docker exec -it hs2.example /wait_for_hive.sh
+  sleep 15
 }
 
 beeline_exec() {
