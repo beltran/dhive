@@ -23,7 +23,8 @@ else
     if [[ -z "${TEZ_PAZ}" ]]; then
         if [ ! -f tez.tar.gz ]; then
             echo "Downloading tez"
-            wget -nc $TEZ_URL -O tez.tar.gz || true
+            wget -nc $TEZ_URL || true
+            cp apache-tez-$TEZ_VERSION-bin.tar.gz tez.tar.gz
 
             # All this is to remove the parent directory from the tar
             rm -rf tez_temp

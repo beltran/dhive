@@ -24,7 +24,8 @@ if [ "$HIVE_COMPILE" = "1" ]; then
 else
     if [[ -z "${HIVE_PAZ}" ]]; then
         echo "Downloading hive"
-        wget -nc $HIVE_URL -O hive.tar.gz || true
+        wget -nc $HIVE_URL || true
+        cp apache-hive-$HIVE_VERSION-bin.tar.gz hive.tar.gz
     else
         cp $HIVE_PAZ/packaging/target/apache-hive-$HIVE_VERSION-bin.tar.gz hive.tar.gz || { echo 'Copy failed' ; exit 3; }
     fi

@@ -12,7 +12,7 @@ generate:
 	python3 dhive.py
 
 stop: stop-monitoring
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml down
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml down --remove-orphans
 
 start: stop start-monitoring
 	docker volume rm hadoop-kerberos_server-keytab || true
