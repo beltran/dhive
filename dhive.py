@@ -1,11 +1,10 @@
 import glob
-import configparser
 import os
 import jinja2
 import yaml
 import argparse
 import shutil
-
+import configparser
 
 from utils import remove_property_if_exits, write_property
 

@@ -70,4 +70,9 @@
     <value>4</value>
   </property>
 
+  <property>
+    <name>mapreduce.job.counters.max</name>
+    <value>1000</value>
+  </property>
+
 </configuration>

@@ -33,7 +33,7 @@ restart-hive-meta: assure-all
 restart-hive-server: assure-all
 	docker rm -f hs2.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hs2
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 -p 8000:8000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
 
 restart-tez: assure-all
 	docker rm -f tez.example || true

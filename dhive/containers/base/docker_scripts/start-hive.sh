@@ -20,6 +20,8 @@ hdfs dfs -mkdir -p /ranger/audit/ /user/hive/warehouse /user/hive/tmp/scratchdir
     /tmp /user/hive/external/ $HIVE_DFS_INSTALL /user/hive/tmp/scratchdir/whoever \
     /user/yarn/yarn /user/yarn/framework /user/yarn/yarn/services/dhive-llap/
 
+# Remove it in case it's a restart
+hdfs dfs -rm $HIVE_DFS_INSTALL/hive-exec-$HIVE_VERSION.jar
 hdfs dfs -copyFromLocal /hive/lib/hive-exec-$HIVE_VERSION.jar $HIVE_DFS_INSTALL
 
 hdfs dfs -chmod 700 /user/hive/warehouse
@@ -27,7 +29,7 @@ hdfs dfs -chmod g+w /user/hive/tmp
 hdfs dfs -chmod 777 /user/hive/tmp/scratchdir /user/hive/external/ /tmp \
     /user/hive/tmp/scratchdir/whoever $HIVE_DFS_INSTALL /ranger/audit \
     /user/yarn/yarn /user/yarn/framework /user/yarn/yarn/services/dhive-llap/ \
-    /user/yarn/yarn/services
+    /user/yarn/yarn/services /tmp/ /user/hive/tmp/scratchdir/hive
 
 hdfs dfs -chown -R hive /user/hive/ $HIVE_DFS_INSTALL /user/yarn/
 

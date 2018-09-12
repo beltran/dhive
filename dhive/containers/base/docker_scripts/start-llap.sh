@@ -3,6 +3,9 @@
 source /common.sh
 kerberos_auth hive/llap.example.com
 
+# hdfs dfs -mkdir /tmp/
+# hdfs dfs -chmod 777 /tmp/
+
 mkdir -p /hive/llap
 pushd /hive/llap
 
