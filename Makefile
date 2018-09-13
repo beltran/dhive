@@ -9,14 +9,21 @@ all: generate assure-all start
 	echo "External configuration file: ${DHIVE_CONFIG_FILE}"
 
 generate:
-	python3 dhive.py
+	python3 dhive.py --namespace=$(namespace)
 
 stop: stop-monitoring
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml down --remove-orphans
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml down
+
 
 start: stop start-monitoring
 	docker volume rm hadoop-kerberos_server-keytab || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml up -d --force-recreate --build
+
+restart: assure-all
+	docker-compose -f build/docker-compose.yml stop -t 1 $(service)
+	docker-compose -f build/docker-compose.yml build $(service)
+	docker-compose -f build/docker-compose.yml create $(service)
+	docker-compose -f build/docker-compose.yml start $(service)
 
 restart-ranger: assure-all
 	docker rm -f ranger.example || true

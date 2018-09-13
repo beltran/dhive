@@ -12,4 +12,11 @@
     done
 }
 
+@test "test a valid docker file is generated, all files with namespace" {
+    for filename in config/*.cfg; do
+        DHIVE_CONFIG_FILE=$filename make namespace=name_ generate
+        docker-compose -f build/docker-compose.yml config
+    done
+}
+
 

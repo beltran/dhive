@@ -13,15 +13,33 @@ GLOBAL_SECTION = "global"
 
 
 class Generator(object):
-    def __init__(self, config_file, output_dir):
+    def __init__(self, config_file, ports_file, output_dir, namespace):
         self.config_file = config_file
+        self.ports_file = ports_file
         self.output_dir = output_dir
+        self.namespace = namespace
         self.CONTAINER_BASE = os.path.join(self.output_dir, "containers/base")
         self.CONFIG_DIRECTORY = os.path.join(self.CONTAINER_BASE, "conf")
         self.MODULE_DIRECTORY = os.path.join(self.output_dir, "services")
         self.DOCKER_COMPOSE_FILE = os.path.join(self.output_dir, "docker-compose.yml")
         self.DOCKERFILE = os.path.join(self.CONTAINER_BASE, "Dockerfile")
         self.DOCKER_SCRIPTS = os.path.join(self.CONTAINER_BASE, "docker_scripts")
+        with open(self.ports_file) as f:
+            self.ports_yaml = yaml.safe_load(f)
+
+        self.template = \
+"""
+version: "2"
+services:
+
+networks:
+  default:
+    external:
+      name: {0}com
+
+volumes:
+  {0}server-keytab:
+""".format(self.namespace)
 
     def populate_configuration(self, config):
         self._populate_configuration_module(config, "core")
@@ -138,20 +156,6 @@ class Generator(object):
             else:
                 os.chmod(source_file, 0o444)
 
-    template = \
-    """
-    version: "2"
-    services:
-    
-    networks:
-      default:
-        external:
-          name: com
-    
-    volumes:
-      server-keytab:
-    """
-
     def generate_docker_compose(self, config):
         compose_template = yaml.load(self.template)
 
@@ -168,7 +172,40 @@ class Generator(object):
 
             # There can be serveral containers in each module
             for container_name in module_yaml:
-                compose_template["services"][container_name] = module_yaml[container_name]
+                module_yaml[container_name]["container_name"] = self.namespace \
+                                                                + module_yaml[container_name]["container_name"]
+
+                if "volumes" in module_yaml[container_name]:
+                    volumes = []
+                    for volume in module_yaml[container_name]["volumes"]:
+                        if volume.startswith("server-keytab"):
+                            volumes.append(self.namespace + volume)
+                        else:
+                            volumes.append(volume)
+                    module_yaml[container_name]["volumes"] = volumes
+
+                if "depends_on" in module_yaml[container_name]:
+                    depends_on = []
+                    for depend in module_yaml[container_name]["depends_on"]:
+                        depends_on.append(self.namespace + depend)
+                    module_yaml[container_name]["depends_on"] = depends_on
+
+                if "links" in module_yaml[container_name]:
+                    links = []
+                    for link in module_yaml[container_name]["links"]:
+                        links.append(self.namespace + link)
+                    module_yaml[container_name]["links"] = links
+
+                if container_name in self.ports_yaml:
+                    ports = self.ports_yaml[container_name]
+                    module_yaml[container_name]["ports"] = []
+                    for port in ports:
+                        if port not in module_yaml[container_name]["ports"]:
+                            module_yaml[container_name]["ports"].append(port)
+
+                module_yaml[container_name]["hostname"] = self.namespace + container_name + ".example." + self.namespace + "com"
+
+                compose_template["services"][self.namespace + container_name] = module_yaml[container_name]
 
         output = yaml.dump(compose_template, default_flow_style=False)
 
@@ -180,12 +217,52 @@ class Generator(object):
             if not self._is_standard_module(service):
                 self.generate_external_module(config, service)
 
+    def replace_hostnames(self):
+        if self.namespace:
+            with open(self.DOCKER_COMPOSE_FILE, "r") as f:
+                output_dockerfile = yaml.safe_load(f)
+
+            for service in output_dockerfile["services"]:
+                original_service = service.replace(self.namespace, "")
+                self.replace_single_hostname(original_service)
+
+    def replace_single_hostname(self, service):
+        replace = service + ".example.com"
+        replacement = self.namespace + service + ".example." + self.namespace + "com"
+        for dname, dirs, files in os.walk(self.output_dir):
+            for fname in files:
+                fpath = os.path.join(dname, fname)
+                with open(fpath) as f:
+                    s = f.read()
+                s = s.replace(replace, replacement)
+                with open(fpath, "w") as f:
+                    f.write(s)
+
+    def setup_kerberos(self):
+        if self.namespace:
+            path = os.path.join(self.output_dir, "containers/base/docker_scripts/common.sh")
+            with open(path) as f:
+                s = f.read()
+
+            replace = "#!/usr/bin/env bash"
+            replacement = """#!/usr/bin/env bash
+
+
+sudo sed -i -e 's/kerberos.example.com/{0}kerberos.example.{0}com/' /etc/krb5.conf
+sudo sed -i -e 's/example.com/example.{0}com/' /etc/krb5.conf
+""".format(self.namespace)
+            s = s.replace(replace, replacement)
+            with open(path, "w") as f:
+                f.write(s)
+
     def generate(self):
         config = self.parse_config()
         self.generate_build(config)
         self.populate_configuration(config)
         self.generate_external_modules(config)
         self.generate_docker_compose(config)
+        self.replace_hostnames()
+        self.setup_kerberos()
         self.set_permissions()
 
     def parse_config(self):
@@ -206,8 +283,15 @@ if __name__ == "__main__":
     else:
         default_config = "config/vars.cfg"
 
+    if "PORT_CONFIG_FILE" in os.environ and os.environ["PORT_CONFIG_FILE"]:
+        default_config_port = os.environ["PORT_CONFIG_FILE"]
+    else:
+        default_config_port = "config/ports.yml"
+
     parser.add_argument('--config-file', type=str, default=default_config, help="config file")
+    parser.add_argument('--port-file', type=str, default=default_config_port, help="ports file")
     parser.add_argument('--output-dir', type=str, default="build", help="directory where the files are generated")
+    parser.add_argument('--namespace', type=str, default="", help="prefix to append to all the names")
     args = parser.parse_args()
 
-    Generator(args.config_file, args.output_dir).generate()
+    Generator(args.config_file, args.port_file, args.output_dir, args.namespace).generate()

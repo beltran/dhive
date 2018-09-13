@@ -105,6 +105,21 @@ test_hive_no_auth () {
 
   test_hdfs
   test_hive
+
+  make dclean
+}
+
+@test "test_default_vars_file_with_namespace" {
+  teardown () {
+    make namespace=name dclean
+  }
+
+  make namespace=name dclean all
+
+  test_hdfs
+  test_hive
+
+  make namespace=name dclean
 }
 
 @test "test_no_auth_file" {

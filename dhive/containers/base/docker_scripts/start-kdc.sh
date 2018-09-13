@@ -1,5 +1,7 @@
 #! /bin/bash
 
+source /common.sh
+
 /usr/sbin/kdb5_util -P changeme create -s
 
 

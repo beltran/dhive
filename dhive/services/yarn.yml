@@ -17,7 +17,7 @@ rm:
     - server-keytab:/var/keytabs
     - /hadoop
 
-nm:
+nm1:
   ports:
     - 8042:8042
   container_name: nm1.example
