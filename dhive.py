@@ -231,6 +231,9 @@ volumes:
         replacement = self.namespace + service + ".example." + self.namespace + "com"
         for dname, dirs, files in os.walk(self.output_dir):
             for fname in files:
+                if fname.endswith(".jar") or fname.endswith(".tgz") \
+                        or fname.endswith(".gz") or fname.endswith(".tar"):
+                    continue
                 fpath = os.path.join(dname, fname)
                 with open(fpath) as f:
                     s = f.read()

@@ -52,7 +52,16 @@ restart-llap: assure-all
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build llap
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name llap.example --detach --entrypoint /start-llap.sh --rm llap
 
-restart-zookeeper: assure-all
+restart-rm: assure-all
+	docker rm -f rm.example || true
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build rm
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name rm.example --detach --entrypoint /start-resourcemanager.sh --rm rm
+
+	docker nm1 -f nm1.example || true
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build nm1
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name nm1.example --detach --entrypoint /start-nodemanager.sh --rm nm1
+
+restart-zk: assure-all
 	docker rm -f zk1.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build zk1
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name zk1.example --detach --entrypoint /scripts/entry_point.sh --rm zk1

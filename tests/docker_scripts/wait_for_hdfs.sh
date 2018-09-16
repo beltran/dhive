@@ -5,12 +5,13 @@ wait_for_hdfs () {
     counter=0
     while [ 1 ]
     do
-        curl nn.example.com:9000
+        ip_address=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
+        curl $ip_address:9000
         if [ $? -eq 0 ]; then
           break
         fi
         counter=$((counter+1))
-        if [[ "$counter" -gt 20 ]]; then
+        if [[ "$counter" -gt 40 ]]; then
           # Just fail because the port didn't open
           echo "Port never opened"
           exit 1

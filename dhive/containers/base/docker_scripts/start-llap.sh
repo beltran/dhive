@@ -25,7 +25,7 @@ while :; do
     echo "Waiting for the hive metastore to come up"; sleep 2;
 done
 
-hive --service llap --name dhive-llap --instances 1 --size 1024m --logger console --loglevel DEBUG \
+hive --service llap --name dhive-llap --instances 1 --health-percent 75 --size 1024m --logger console --loglevel DEBUG \
     --args " -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA  -XX:-ResizePLAB"
 
 # hdfs dfs -copyFromLocal /var/keytabs/hdfs.keytab /user/hive/

@@ -57,23 +57,23 @@ wait_for_llap() {
 }
 
 wait_for_hdfs() {
-  docker cp tests/docker_scripts/wait_for_hdfs.sh nn.example:/
-  docker exec -it nn.example /wait_for_hdfs.sh
+  docker cp tests/docker_scripts/wait_for_hdfs.sh "$1"nn.example:/
+  docker exec -it "$1"nn.example /wait_for_hdfs.sh
 }
 
 test_hdfs () {
-  wait_for_hdfs
-  docker exec -it nn.example hdfs dfs -ls /
+  wait_for_hdfs $1
+  docker exec -it "$1"nn.example hdfs dfs -ls /
 }
 
 wait_for_hive() {
-  docker cp tests/docker_scripts/wait_for_hive.sh hs2.example:/
-  docker exec -it hs2.example /wait_for_hive.sh
+  docker cp tests/docker_scripts/wait_for_hive.sh "$1"hs2.example:/
+  docker exec -it "$1"hs2.example /wait_for_hive.sh
   sleep 15
 }
 
 beeline_exec() {
-  docker exec -it hs2.example beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/_HOST@EXAMPLE.COM;hive.server2.proxy.user=hive" -e \""$1"\"
+  docker exec -it "$2"hs2.example beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/$2hs2.example.$2com@EXAMPLE.COM;hive.server2.proxy.user=hive" -e \""$1"\"
 }
 
 beeline_exec_no_auth() {
@@ -81,19 +81,19 @@ beeline_exec_no_auth() {
 }
 
 test_hive () {
-    wait_for_hive
-    beeline_exec 'CREATE DATABASE batsDB;'
-    beeline_exec 'CREATE TABLE batsDB.batsTB(a int, b int);'
-    beeline_exec 'INSERT INTO batsDB.batsTB(a, b) VALUES (2, 3);'
-    beeline_exec 'SELECT * FROM batsDB.batsTB;'
+    wait_for_hive $1
+    beeline_exec 'CREATE DATABASE batsDB;' $1
+    beeline_exec 'CREATE TABLE batsDB.batsTB(a int, b int);' $1
+    beeline_exec 'INSERT INTO batsDB.batsTB(a, b) VALUES (2, 3);' $1
+    beeline_exec 'SELECT * FROM batsDB.batsTB;' $1
 }
 
 test_hive_no_auth () {
-    wait_for_hive
-    beeline_exec_no_auth 'CREATE DATABASE batsDB;'
-    beeline_exec_no_auth 'CREATE TABLE batsDB.batsTB(a int, b int);'
-    beeline_exec_no_auth 'INSERT INTO batsDB.batsTB(a, b) VALUES (2, 3);'
-    beeline_exec_no_auth 'SELECT * FROM batsDB.batsTB;'
+    wait_for_hive $1
+    beeline_exec_no_auth 'CREATE DATABASE batsDB;' $1
+    beeline_exec_no_auth 'CREATE TABLE batsDB.batsTB(a int, b int);' $1
+    beeline_exec_no_auth 'INSERT INTO batsDB.batsTB(a, b) VALUES (2, 3);' $1
+    beeline_exec_no_auth 'SELECT * FROM batsDB.batsTB;' $1
 }
 
 @test "test_default_vars_file" {
@@ -105,21 +105,17 @@ test_hive_no_auth () {
 
   test_hdfs
   test_hive
-
-  make dclean
 }
 
 @test "test_default_vars_file_with_namespace" {
   teardown () {
     make namespace=name dclean
   }
-
   make namespace=name dclean all
 
-  test_hdfs
-  test_hive
+  test_hdfs name
+  test_hive name
 
-  make namespace=name dclean
 }
 
 @test "test_no_auth_file" {

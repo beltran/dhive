@@ -2,10 +2,8 @@ zk1:
   container_name: zk1.example
   hostname: zk1.example.com
   entrypoint: /scripts/entry_point.sh
-  image: zookeeper
+  image: zookeeper:3.4.13
   restart: always
-  ports:
-    - 2181:2181
   environment:
     ZOO_MY_ID: 1
     ZOO_SERVERS: server.1=0.0.0.0:2888:3888
