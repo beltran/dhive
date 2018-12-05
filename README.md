@@ -27,7 +27,7 @@ make all
 ```
 
 This will:
-- Start several services in docker images: keberos, hadoop, yarn, tez, hive or other services
+- Start several services in docker images: kerberos, hadoop, yarn, tez, hive or other services
 depending on what's defined on `config/vars.cfg`
 - Pull relevant logs from the docker images which can be seen at `http:localhost:8000`
 
