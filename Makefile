@@ -69,6 +69,23 @@ restart-zk: assure-all
 pull-logs:
 	bash ${SCRIPTS_PATH}/pull_logs.sh
 
+# get shell in HS2 container
+hs2-shell:
+	docker exec -it hs2.example /bin/bash
+
+# run beeline in HS2 container
+beeline:
+	docker exec -it hs2.example beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"	
+
+# get a CLI for the (MySQL based) metastore database
+mysqlCli:
+	docker exec -it mysql.example mysql -proot_pass metastore
+
+# will run the SchemaInit script against the metastore database (needs to be in your workspace)
+mysqlInit:
+	docker cp ${HOME}/workspace/hive/standalone-metastore/metastore-server/src/main/sql/mysql/hive-schema-4.0.0.mysql.sql mysql.example:/tmp	
+	docker exec -t mysql.example /bin/bash -c "mysql -proot_pass --force metastore < /tmp/hive-schema-4.0.0.mysql.sql" 	
+
 stop-monitoring:
 	ps aux | grep SimpleHTTPServer | grep -v grep | awk '{print $$2}' | xargs kill -9 || true
 	ps aux | grep forever_pull_logs.sh | grep -v grep | awk '{print $$2}' | xargs kill -9 > /dev/null 2>&1 || true

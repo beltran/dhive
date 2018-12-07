@@ -3,6 +3,7 @@ FROM centos:7
 RUN yum -y install krb5-server krb5-workstation
 RUN yum -y install java-1.8.0-openjdk-headless
 RUN yum -y install apache-commons-daemon-jsvc
+RUN yum -y install less
 RUN yum install net-tools -y
 RUN yum install telnet telnet-server -y
 RUN yum -y install which
@@ -58,7 +59,7 @@ ENV TEZ_JARS=/tez_jars
 COPY tez.tar.gz /
 COPY tez_up.tar.gz /
 RUN mkdir $TEZ_JARS
-RUN tar -xvzf tez.tar.gz -C $TEZ_JARS
+RUN tar -xzf tez.tar.gz -C $TEZ_JARS
 
 # Hive section
 ENV HIVE_HOME=/hive
@@ -66,7 +67,7 @@ COPY hive.tar.gz /
 RUN mkdir $HIVE_HOME
 RUN mkdir $HIVE_HOME/metastore
 RUN mkdir $HIVE_HOME/tmp
-RUN tar -xvzf hive.tar.gz -C $HIVE_HOME --strip-components 1
+RUN tar -xzf hive.tar.gz -C $HIVE_HOME --strip-components 1
 ENV PATH=$HIVE_HOME/bin:$PATH
 RUN chown -R -L hdfs $HIVE_HOME
 
