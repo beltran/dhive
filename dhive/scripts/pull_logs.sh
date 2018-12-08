@@ -18,6 +18,6 @@ echo "Pulled logs from apps at: http://localhost:8123/"
 python -m SimpleHTTPServer 8123 >/dev/null 2>&1 &
 popd
 
-nohup bash $SCRIPTS_PATH/forever_pull_logs.sh &
+nohup bash $SCRIPTS_PATH/forever_pull_logs.sh > /dev/null 2>&1 &
 
 #xdg-open http://localhost:8123/

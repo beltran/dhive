@@ -102,8 +102,8 @@ way to see it is to check the `[services]` section in the file.
 
 Usually the following steps would be taken:
 - Add a new `SERVICE_NAME.yml` to `dhive/services`.
-- Maybe adding a start script to `dhive/scripts`.
-- Maybe creating a new principal in `dhive/scripts/start-kdc.sh`.
+- Maybe adding a start script to `dhive/containers/base/docker_scripts`.
+- Maybe creating a new principal in `dhive/containers/base/docker-scripts/start-kdc.sh`.
 - Maybe overriding or removing some of the properties of the configuration files.
 - Add the new service to `config/vars.cfg` or to a different configuration file (it can be
 set with the environment variable `DHIVE_CONFIG_FILE`).
