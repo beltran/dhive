@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import io
 import os
+import yaml
+from collections import OrderedDict
 
 
 def remove_property_if_exits(file_name, name):
@@ -50,3 +52,21 @@ def _write_tree(tree, file_name):
     os.remove(file_name)
     with open(file_name, 'w') as output:
         output.write(pretty_xml_as_string)
+
+
+# Remove docker compose duplicate builds
+def remove_duplicate_builds(initial):
+    base_image = "base_image"
+    initial["services"] = OrderedDict(initial["services"])
+    candidates = [v for v in initial["services"].values() if
+                     "build" in v and "context" in v["build"] and v["build"]["context"] == "./containers/base"]
+    first_service = candidates[0]
+    first_service["image"] = base_image
+    for service in candidates[1:]:
+        del service["build"]
+        service["image"] = base_image
+
+def setup_yaml():
+    """ https://stackoverflow.com/a/8661021 """
+    represent_dict_order = lambda self, data: self.represent_mapping('tag:yaml.org,2002:map', data.items())
+    yaml.add_representer(OrderedDict, represent_dict_order)
