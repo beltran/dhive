@@ -6,7 +6,7 @@ import argparse
 import shutil
 import configparser
 
-from utils import remove_property_if_exits, write_property
+from utils import remove_property_if_exits, write_property, remove_duplicate_builds, setup_yaml
 
 ROOT_DIR = "dhive"
 GLOBAL_SECTION = "global"
@@ -207,6 +207,7 @@ volumes:
 
                 compose_template["services"][self.namespace + container_name] = module_yaml[container_name]
 
+        remove_duplicate_builds(compose_template)
         output = yaml.dump(compose_template, default_flow_style=False)
 
         with open(self.DOCKER_COMPOSE_FILE, "w") as f:
@@ -296,5 +297,7 @@ if __name__ == "__main__":
     parser.add_argument('--output-dir', type=str, default="build", help="directory where the files are generated")
     parser.add_argument('--namespace', type=str, default="", help="prefix to append to all the names")
     args = parser.parse_args()
+
+    setup_yaml()
 
     Generator(args.config_file, args.port_file, args.output_dir, args.namespace).generate()

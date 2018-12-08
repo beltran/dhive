@@ -25,46 +25,41 @@ restart: assure-all
 	docker-compose -f build/docker-compose.yml create $(service)
 	docker-compose -f build/docker-compose.yml start $(service)
 
-restart-ranger: assure-all
+restart-ranger: assure-all rebuild-base-image
 	docker rm -f ranger.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build ranger
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 6080:6080 --name ranger.example --detach --entrypoint /start-ranger-admin.sh --rm ranger
 
 restart-hive: restart-hive-server restart-hive-meta
 
-restart-hive-meta: assure-all
+restart-hive-meta: assure-all rebuild-base-image
 	docker rm -f hm.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hm
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name hm.example --detach --entrypoint /start-hive-metastore.sh --rm hm
 
-restart-hive-server: assure-all
+restart-hive-server: assure-all rebuild-base-image
 	docker rm -f hs2.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build hs2
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 -p 8000:8000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
 
-restart-tez: assure-all
+restart-tez: assure-all rebuild-base-image
 	docker rm -f tez.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build tez
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name tez.example --detach --entrypoint /install-tez.sh --rm tez
 
-restart-llap: assure-all
+restart-llap: assure-all rebuild-base-image
 	docker rm -f llap.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build llap
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name llap.example --detach --entrypoint /start-llap.sh --rm llap
 
-restart-rm: assure-all
+restart-rm: assure-all rebuild-base-image
 	docker rm -f rm.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build rm
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name rm.example --detach --entrypoint /start-resourcemanager.sh --rm rm
 
 	docker nm1 -f nm1.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build nm1
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name nm1.example --detach --entrypoint /start-nodemanager.sh --rm nm1
 
-restart-zk: assure-all
+restart-zk: assure-all rebuild-base-image
 	docker rm -f zk1.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build zk1
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name zk1.example --detach --entrypoint /scripts/entry_point.sh --rm zk1
+
+rebuild-base-image:
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build
 
 pull-logs:
 	bash ${SCRIPTS_PATH}/pull_logs.sh
