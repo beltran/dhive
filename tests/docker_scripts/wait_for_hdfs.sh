@@ -6,7 +6,7 @@ wait_for_hdfs () {
     while [ 1 ]
     do
         ip_address=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
-        curl $ip_address:9000
+        curl nn.example.com:9000
         if [ $? -eq 0 ]; then
           break
         fi

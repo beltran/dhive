@@ -19,9 +19,8 @@ start: stop start-monitoring
 	docker volume rm hadoop-kerberos_server-keytab || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml up -d --force-recreate --build
 
-restart: assure-all
+restart: assure-all rebuild-base-image
 	docker-compose -f build/docker-compose.yml stop -t 1 $(service)
-	docker-compose -f build/docker-compose.yml build $(service)
 	docker-compose -f build/docker-compose.yml create $(service)
 	docker-compose -f build/docker-compose.yml start $(service)
 

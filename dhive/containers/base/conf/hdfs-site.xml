@@ -130,13 +130,13 @@
 
   <property>
     <name>dfs.namenode.decommission.interval</name>
-    <value>40s</value>
+    <value>40</value>
   </property>
 
   <!-- 40 shows a warning saying something is deprecated but 40S throws NumberException-->
   <property>
     <name>dfs.client.datanode-restart.timeout</name>
-    <value>40s</value>
+    <value>40</value>
   </property>
 
 
