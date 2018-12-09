@@ -1,24 +1,33 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 usage="$(basename "$0") [-h] [-s] [-a] -- run short or long tests
 where:
     -s: short tests
+    -t: travis tests
     -a: all tests
 "
 
-SHORT=1
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
 key="$1"
 case $key in
     -s)
-    SHORT=1
-    shift
+    echo "Running short tests"
+    bats --tap tests/short.bats
+    exit 0
     ;;
     -a)
-    SHORT=0
-    shift
+    echo "Running all tests"
+    bats --tap tests/short.bats
+    bats --tap tests/long.bats
+    bats --tap tests/travis.bats
+    exit 0
+    ;;
+    -t)
+    echo "Running travis tests"
+    bats --tap tests/travis.bats
+    exit 0
     ;;
     -h)
     echo $usage
@@ -33,12 +42,3 @@ case $key in
 esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
-
-if [ $SHORT = "1" ]; then
-    echo "Running short tests"
-    bats --tap tests/short.bats
-else
-    echo "Running all tests"
-    bats --tap tests/short.bats
-    bats --tap tests/long.bats
-fi
