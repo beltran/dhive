@@ -86,6 +86,7 @@ volumes:
             f.write("DOCKER_COMPOSE_PATH={}\n".format(self.output_dir))
             f.write("DHIVE_CONFIG_FILE={} make generate assure-all\n".format(self.config_file))
             f.write("docker rm -f {}.example || true\n".format(service))
+            f.write("docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build\n")
             f.write("docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml build " + service + "\n")
 
             last_part = "--name {0}.example --detach --entrypoint /{0}.sh --rm {0}\n".format(service)
