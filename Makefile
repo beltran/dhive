@@ -50,7 +50,7 @@ restart-rm: assure-all rebuild-base-image
 	docker rm -f rm.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name rm.example --detach --entrypoint /start-resourcemanager.sh --rm rm
 
-	docker nm1 -f nm1.example || true
+	docker rm -f nm1.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name nm1.example --detach --entrypoint /start-nodemanager.sh --rm nm1
 
 restart-zk: assure-all rebuild-base-image
