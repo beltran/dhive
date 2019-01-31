@@ -92,8 +92,8 @@ jdbc:hive2://hs2.example.com:10000/>SELECT * from pokes;
 By default `config/vars.cfg` will be used but other configurations are available in the `config` folder.
 They can be run setting the `DHIVE_CONFIG_FILE` environment variable, for example:
 ```
-DHIVE_CONFIG_FILE=config/spark.cfg make clean all
-HIVE_COMPILE=1 DHIVE_CONFIG_FILE=config/spark.cfg make restart-hive-server
+DHIVE_CONFIG_FILE=config/external/spark.cfg make clean all
+HIVE_COMPILE=1 DHIVE_CONFIG_FILE=config/external/spark.cfg make restart-hive-server
 ```
 are valid commands. To see what services a particular configuration file is going to deploy the easiest
 way to see it is to check the `[services]` section in the file.
@@ -116,7 +116,7 @@ DHIVE_CONFIG_FILE=config/mysql.cfg make all
 ## Running a container with a job
 This can be done to submit a jar to hadoop to run with tez, or to run hive queries, or more generally,
 once the environment is set up, to take actions against it.
-An example of how the first would be done is the file `config/run_tez_job.cfg`. It's added like another
+An example of how the first would be done is the file `config/external/run_tez_job.cfg`. It's added like another
 service but it has to start with `external`. Four variables are defined inside the service section:
 * docker: instructions to add to the `Dockerfile`.
 * assure: files to copy to the folder where docker is going to be built.
@@ -124,7 +124,7 @@ service but it has to start with `external`. Four variables are defined inside t
 * kerberos: principals to add for kerberos at the running host.
 
 To run this particular example:
-`DHIVE_CONFIG_FILE=config/run_tez_job.cfg make all`
+`DHIVE_CONFIG_FILE=config/external/run_tez_job.cfg make all`
 
 This will also generate the script `build/restart-new-service-name` in case we want to tweak something
 in the `.cfg` file and only restart the new service.
@@ -143,7 +143,7 @@ Sample configuration that show how write tables in s3 can be found in `config/aw
 
 
 ## Spark
-An example of how to run a spark job against hive is shown in `config/spark.cfg`. In a similar
+An example of how to run a spark job against hive is shown in `config/external/spark.cfg`. In a similar
 way it can be done against a LLAP setup.
 
 
