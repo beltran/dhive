@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+KERBEROS={{kerberos}}
+
 source /common.sh
 kerberos_auth hive/llap.example.com
 
@@ -25,7 +27,10 @@ while :; do
     echo "Waiting for the hive metastore to come up"; sleep 2;
 done
 
-hive --service llap --name dhive-llap --instances 1 --health-percent 75 --size 1024m --logger console --loglevel DEBUG \
+hdfs dfs -mkdir -p /user/hive/.yarn/package/LLAP/
+hdfs dfs -chmod 777 /user/hive/.yarn/package/LLAP/
+
+hive --service llap --name dhive-llap --instances 1 --size 1024m --logger console --loglevel DEBUG \
     --args " -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA  -XX:-ResizePLAB"
 
 # hdfs dfs -copyFromLocal /var/keytabs/hdfs.keytab /user/hive/
@@ -34,8 +39,14 @@ pushd ./llap-yarn-*/
 tar_name=$(ls llap-*)
 popd
 
-sed -i 's/\"principal_name\".*/\"principal_name\" : \"hive\/_HOST@EXAMPLE.COM\",/g' ./llap-yarn-*/Yarnfile
-sed -i 's/\"keytab\".*/\"keytab\" : \"hdfs:\/\/\/user\/hive\/hdfs.keytab\"/g' ./llap-yarn-*/Yarnfile
+if [ "$KERBEROS" = "no_kerberos" ]; then
+    echo "Not adding kerberos line to llap"
+else
+    echo "Adding kerberos line to llap"
+    sed -i 's/\"principal_name\".*/\"principal_name\" : \"hive\/_HOST@EXAMPLE.COM\",/g' ./llap-yarn-*/Yarnfile
+    sed -i 's/\"keytab\".*/\"keytab\" : \"hdfs:\/\/\/user\/hive\/hdfs.keytab\"/g' ./llap-yarn-*/Yarnfile
+fi
+
 sed -i 's/\"LLAP_DAEMON_LOG_LEVEL\".*/\"LLAP_DAEMON_LOG_LEVEL\": \"DEBUG\",/g' ./llap-yarn-*/Yarnfile
 sed -i 's/\"yarn.service.rolling-log.include-pattern\".*/\"yarn.service.rolling-log.include-pattern\" : \"\.\*\", \"yarn.service.log.include-pattern\" : \"\.\*\",/g' ./llap-yarn-*/Yarnfile
 sed -i "s/\"id\".*/\"id\" : \"\/user\/hive\/.yarn\/package\/LLAP\/$tar_name\",/g" ./llap-yarn-*/Yarnfile
@@ -50,6 +61,6 @@ sed -i "s/\"id\".*/\"id\" : \"\/user\/hive\/.yarn\/package\/LLAP\/$tar_name\",/g
 # tar czf ../llap-*tar.gz *
 # popd
 # popd
-
+hdfs dfs -copyFromLocal llap-yarn-*/$tar_name  /user/hive/.yarn/package/LLAP/
 ./llap-yarn-*/run.sh
 /sleep.sh
