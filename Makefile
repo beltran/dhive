@@ -36,7 +36,7 @@ restart-hive-meta: assure-all rebuild-base-image
 
 restart-hive-server: assure-all rebuild-base-image
 	docker rm -f hs2.example || true
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10000:10000 -p 8000:8000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run -p 10004:10004 -p 10000:10000 -p 8000:8000 --name hs2.example --detach --entrypoint /start-hive.sh --rm hs2
 
 restart-tez: assure-all rebuild-base-image
 	docker rm -f tez.example || true
@@ -53,7 +53,7 @@ restart-rm: assure-all rebuild-base-image
 	docker rm -f nm1.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name nm1.example --detach --entrypoint /start-nodemanager.sh --rm nm1
 
-restart-zk: assure-all rebuild-base-image
+restart-zk: assure-all
 	docker rm -f zk1.example || true
 	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml run --name zk1.example --detach --entrypoint /scripts/entry_point.sh --rm zk1
 
@@ -70,6 +70,11 @@ hs2-shell:
 # run beeline in HS2 container
 beeline:
 	docker exec -it hs2.example beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@EXAMPLE.COM;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"	
+
+# run beeline in HS2 container
+beeline_noauth:
+	docker exec -it hs2.example beeline -u "jdbc:hive2://hs2.example.com:10000/;hive.server2.proxy.user=hive/hs2.example.com@EXAMPLE.COM"
+
 
 # get a CLI for the (MySQL based) metastore database
 mysqlCli:

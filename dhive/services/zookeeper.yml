@@ -9,6 +9,6 @@ zk1:
     ZOO_SERVERS: server.1=0.0.0.0:2888:3888
   volumes:
     # - /containers/zookeeper/conf/zoo.cfg:/conf/zoo.cfg
-    - ./containers/zookeeper/scripts/:/scripts
-    - ./containers/zookeeper/conf/:/conf
+    - ./containers/zookeeper/{{zookeeper_scripts}}/:/scripts
+    - ./containers/zookeeper/{{zookeeper_conf}}/:/conf
     - server-keytab:/var/keytabs

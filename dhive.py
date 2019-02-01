@@ -12,6 +12,14 @@ ROOT_DIR = "dhive"
 GLOBAL_SECTION = "global"
 
 
+"""
+ports.yml is a feature that allows to run several dhive setups in the same machine. Each user
+would have a different ports.yml and they would expose different ports. It's disabled by default
+because it's very counter intuitive since the ports in the yml files are ignored
+"""
+IGNORE_PORTS = True
+
+
 class Generator(object):
     def __init__(self, config_file, ports_file, output_dir, namespace):
         self.config_file = config_file
@@ -197,12 +205,13 @@ volumes:
                         links.append(self.namespace + link)
                     module_yaml[container_name]["links"] = links
 
-                if container_name in self.ports_yaml:
-                    ports = self.ports_yaml[container_name]
-                    module_yaml[container_name]["ports"] = []
-                    for port in ports:
-                        if port not in module_yaml[container_name]["ports"]:
-                            module_yaml[container_name]["ports"].append(port)
+                if not IGNORE_PORTS:
+                    if container_name in self.ports_yaml:
+                        ports = self.ports_yaml[container_name]
+                        module_yaml[container_name]["ports"] = []
+                        for port in ports:
+                            if port not in module_yaml[container_name]["ports"]:
+                                module_yaml[container_name]["ports"].append(port)
 
                 module_yaml[container_name]["hostname"] = self.namespace + container_name + ".example." + self.namespace + "com"
 
