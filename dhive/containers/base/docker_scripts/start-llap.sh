@@ -2,6 +2,14 @@
 
 KERBEROS={{kerberos}}
 
+DEBUG_PORT={{llap_debug_port}}
+HIVE_ARGS=" -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA  -XX:-ResizePLAB"
+
+# Start LLAP daemon with remote debugging enabled (waiting for connect)
+if [[ ! -z "$DEBUG_PORT" ]]; then
+    HIVE_ARGS="$HIVE_ARGS -Xdebug -Xrunjdwp:transport=dt_socket,address=$DEBUG_PORT,server=y,suspend=y"
+fi
+
 source /common.sh
 kerberos_auth hive/llap.example.com
 
@@ -31,7 +39,7 @@ hdfs dfs -mkdir -p /user/hive/.yarn/package/LLAP/
 hdfs dfs -chmod 777 /user/hive/.yarn/package/LLAP/
 
 hive --service llap --name dhive-llap --instances 1 --size 1024m --logger console --loglevel DEBUG \
-    --args " -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA  -XX:-ResizePLAB"
+    --args "$HIVE_ARGS"
 
 # hdfs dfs -copyFromLocal /var/keytabs/hdfs.keytab /user/hive/
 
