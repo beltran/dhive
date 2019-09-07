@@ -1,6 +1,7 @@
 
 DOCKER_COMPOSE_PATH=build
 SCRIPTS_PATH=${DOCKER_COMPOSE_PATH}/scripts
+COMPOSE_HTTP_TIMEOUT=240
 
 assure-all: generate
 	bash ${SCRIPTS_PATH}/assure_components.sh
