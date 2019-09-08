@@ -84,7 +84,7 @@ beeline -u "jdbc:hive2://hs2.example.com:10000/;principal=hive/hs2.example.com@E
 
 # For example now to activate the whole stack:
 jdbc:hive2://hs2.example.com:10000/>CREATE TABLE pokes (foo INT, bar STRING);
-jdbc:hive2://hs2.example.com:10000/>INSERT INTO pokes(foo, bar) VALUES (1, "1");
+jdbc:hive2://hs2.example.com:10000/>INSERT INTO pokes VALUES (1, "1");
 jdbc:hive2://hs2.example.com:10000/>SELECT * from pokes;
 ```
 
