@@ -43,16 +43,16 @@ make clean
 
 ## Using a local hive or tez distribution
 
-This can be enabled by setting the variables `HIVE_PATH` or `TEZ_PATH` in `config/vars.cfg`. If we want 
+This can be enabled by setting the variables `hive_path` or `tez_path` in `config/vars.cfg`. If we want 
 dhive to also compile and push the generated tar to the docker containers the variables 
 `HIVE_COMPILE` and `TEZ_COMPILE` have to be set to `1`, for example:
 ```
 HIVE_COMPILE=1 make clean all
 ```
 
-If `HIVE_PATH` or `TEZ_PATH` are not set dhive will download the release from the version specified in `config/vars.cfg`.
+If `hive_path` or `tez_path` are not set dhive will download the release from the version specified in `config/vars.cfg`.
 If won't download it again if it's on the root directory.
-If `HIVE_PATH` or `TEZ_PATH` are set dhive but not `HIVE_COMPILE` or `TEZ_COMPILE` it won't compile the 
+If `hive_path` or `tez_path` are set dhive but not `HIVE_COMPILE` or `TEZ_COMPILE` it won't compile the 
 source code but it will still try to get the tarball from the path.
 
 If some changes are made (changes to `config/vars.cfg` or to the source code) and we want to redeploy
@@ -64,6 +64,7 @@ If we want to recompile because a change in the source code has been done:
 ```
 HIVE_COMPILE=1 make restart-{hive|tez|ranger}
 ```
+In this case the version should be set to the compiled version which would be something like `hive_version = 4.0.0-SNAPSHOT` or `tez_version = 0.10.0-SNAPSHOT`.
 
 
 ## Run commands in containers
