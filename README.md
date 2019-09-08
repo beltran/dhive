@@ -1,4 +1,4 @@
-# Big Data Platform
+# Dhive
 
 The aim of this proyect is to make it easy to deploy a kerberized stack of hadoop/yarn/tez/hive.
 
