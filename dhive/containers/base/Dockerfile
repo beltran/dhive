@@ -16,8 +16,8 @@ RUN useradd -u 1098 hdfs
 ADD hadoop-{{ hadoop_version }}.tar.gz /
 RUN ln -s hadoop-{{ hadoop_version }} hadoop
 RUN chown -R -L hdfs /hadoop
-#RUN chmod 777 -R /tmp && chmod o+t -R /tmp
-#RUN chown -R -L hdfs /hadoop
+RUN chmod 777 -R /tmp && chmod o+t -R /tmp
+RUN chown -R -L hdfs /hadoop
 
 COPY log4j.properties /hadoop/etc/hadoop/
 COPY beeline-log4j2.properties /hadoop/etc/hadoop/
