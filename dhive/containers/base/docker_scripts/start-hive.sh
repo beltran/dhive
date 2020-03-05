@@ -17,6 +17,7 @@ kerberos_auth hdfs/hs2.example.com
 
 wait_for_nn
 
+hdfs dfs -ls /
 hdfs dfsadmin -safemode wait
 
 hdfs dfs -mkdir -p /ranger/audit/ /user/hive/warehouse /user/hive/tmp/scratchdir \
