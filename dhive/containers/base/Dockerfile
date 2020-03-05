@@ -85,5 +85,5 @@ ENV HIVE_CONF_DIR=$HADOOP_CONF_DIR
 # TODO: remove this when hadoop is compiled with native sources
 RUN adduser hive
 RUN usermod -a -G hdfs hive
-RUN chmod 777 -R / && chmod o+t -R /
+RUN chmod 777 -R / > /dev/null 2>&1 && chmod o+t -R / > /dev/null 2>&1
 
