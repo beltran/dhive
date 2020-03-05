@@ -6,6 +6,8 @@ MYSQL_VERSION={{ mysql_connector_version }}
 RANGER_VERSION={{ ranger_version }}
 source /common.sh
 
+ls -ltr /tmp
+
 if [[ -z "${HIVE_HOME}" ]]; then
     exit 1
 fi
