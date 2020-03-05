@@ -20,6 +20,7 @@ kerberos_auth hdfs/hs2.example.com
 wait_for_nn
 
 hdfs dfs -ls /
+hdfs dfs -chown -R 777
 hdfs dfs -mkdir hello
 hdfs dfsadmin -safemode wait
 
