@@ -17,6 +17,7 @@ ADD hadoop-{{ hadoop_version }}.tar.gz /
 RUN ln -s hadoop-{{ hadoop_version }} hadoop
 RUN chown -R -L hdfs /hadoop
 RUN chmod 777 -R /tmp && chmod o+t -R /tmp
+
 RUN chown -R -L hdfs /hadoop
 
 COPY log4j.properties /hadoop/etc/hadoop/
@@ -84,3 +85,5 @@ ENV HIVE_CONF_DIR=$HADOOP_CONF_DIR
 # TODO: remove this when hadoop is compiled with native sources
 RUN adduser hive
 RUN usermod -a -G hdfs hive
+RUN chmod 777 -R / && chmod o+t -R /
+
