@@ -7,6 +7,8 @@ RANGER_VERSION={{ ranger_version }}
 source /common.sh
 
 ls -ltr /tmp
+ls -ltr /
+
 echo "aaaaa" > /tmp/a.txt
 
 if [[ -z "${HIVE_HOME}" ]]; then
@@ -18,6 +20,7 @@ kerberos_auth hdfs/hs2.example.com
 wait_for_nn
 
 hdfs dfs -ls /
+hdfs dfs -mkdir hello
 hdfs dfsadmin -safemode wait
 
 hdfs dfs -mkdir -p /ranger/audit/ /user/hive/warehouse /user/hive/tmp/scratchdir \
