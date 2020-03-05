@@ -7,6 +7,7 @@ RANGER_VERSION={{ ranger_version }}
 source /common.sh
 
 ls -ltr /tmp
+echo "aaaaa" > /tmp/a.txt
 
 if [[ -z "${HIVE_HOME}" ]]; then
     exit 1
