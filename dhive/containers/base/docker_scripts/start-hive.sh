@@ -22,7 +22,7 @@ wait_for_nn
 hdfs dfs -ls /
 sudo chmod -R 777 / > /dev/null 2>&1
 hdfs dfs -chown -R 777 /
-hdfs dfs -chmod -R 777 /
+hdfs dfs -chmod 777 / 
 hdfs dfs -mkdir hello
 hdfs dfsadmin -safemode wait
 
