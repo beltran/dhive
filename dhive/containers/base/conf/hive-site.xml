@@ -43,7 +43,7 @@
     </property>
     <property>
         <name>hive.server2.authentication.kerberos.principal</name>
-        <value>hive/_HOST@EXAMPLE.COM</value>
+        <value>hive/hs2.example.com</value>
     </property>
     <property>
         <name>hive.server2.authentication.kerberos.keytab</name>

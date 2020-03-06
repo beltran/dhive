@@ -57,6 +57,10 @@ export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /hadoop/share/hadoop/tools/lib -nam
 echo $HIVE_CLASSPATH
 #export HIVE_CLASSPATH=${TEZ_JARS}/*:${TEZ_JARS}/lib/*
 sudo keytool -genkey -alias hs2.example.com -keyalg rsa -keysize 1024 -dname "CN=hs2.example.com" -keypass changeme -keystore /var/keytabs/hive.jks -storepass changeme
+
+ls -ltr /var/keytabs/
+chmod 777 /var/keytabs/hdfs.keytab
+
 HADOOP_CLIENT_OPTS=-Dhive.root.logger=console hive --service hiveserver2
 
 # To connect and excute some queries:
