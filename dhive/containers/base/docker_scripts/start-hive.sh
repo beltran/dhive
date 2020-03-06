@@ -60,6 +60,8 @@ sudo keytool -genkey -alias hs2.example.com -keyalg rsa -keysize 1024 -dname "CN
 
 ls -ltr /var/keytabs/
 chmod 777 /var/keytabs/hdfs.keytab
+chmod 777 /etc/krb5.conf
+cat /etc/krb5.conf
 
 HADOOP_CLIENT_OPTS=-Dhive.root.logger=console hive --service hiveserver2
 
