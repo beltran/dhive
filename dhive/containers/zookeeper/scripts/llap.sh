@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-/zookeeper-3.4.13/bin/zkCli.sh <<EOF
+/apache-zookeeper-3.5.7-bin/bin/zkCli.sh <<EOF
 
 create /registry sasl:hive:cdrwa,world:anyone:cdrwa
 create /registry/users sasl:hive:cdrwa,world:anyone:cdrwa

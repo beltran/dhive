@@ -20,6 +20,7 @@ RUN chown -R -L hdfs /hadoop
 #RUN chown -R -L hdfs /hadoop
 
 COPY log4j.properties /hadoop/etc/hadoop/
+COPY yarnservice-log4j.properties /hadoop/etc/hadoop/
 RUN rm /etc/krb5.conf
 COPY krb5.conf /etc
 COPY beeline-log4j2.properties /hadoop/etc/hadoop/
