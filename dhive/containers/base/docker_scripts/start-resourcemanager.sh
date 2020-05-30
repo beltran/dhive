@@ -14,4 +14,7 @@ export HADOOP_resourcemanager_opts=-Dhadoop.root.logger=DEBUG
 # This files comes by default in the installation and overrides some
 # parmeters from yarn-site.xml, not knowing exactly what parameters are set
 rm $HADOOP_CONF_DIR/capacity-scheduler.xml
-yarn resourcemanager
+while [ 4 -le 5 ] 
+do
+	yarn resourcemanager
+done

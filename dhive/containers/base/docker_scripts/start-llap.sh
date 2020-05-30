@@ -3,7 +3,7 @@
 KERBEROS={{kerberos}}
 
 DEBUG_PORT={{llap_debug_port}}
-HIVE_ARGS=" -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA  -XX:-ResizePLAB"
+HIVE_ARGS=" -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA  -XX:-ResizePLAB -verbose:class "
 
 # Start LLAP daemon with remote debugging enabled (waiting for connect)
 if [[ ! -z "$DEBUG_PORT" ]]; then
@@ -37,6 +37,8 @@ done
 
 hdfs dfs -mkdir -p /user/hive/.yarn/package/LLAP/
 hdfs dfs -chmod 777 /user/hive/.yarn/package/LLAP/
+rm /hive/lib/guava-*
+cp /hadoop/share/hadoop/hdfs/lib/guava-* /hive/lib/
 
 hive --service llap --name dhive-llap --instances 1 --size 1024m --logger console --loglevel DEBUG \
     --args "$HIVE_ARGS"
@@ -59,16 +61,16 @@ sed -i 's/\"LLAP_DAEMON_LOG_LEVEL\".*/\"LLAP_DAEMON_LOG_LEVEL\": \"DEBUG\",/g' .
 sed -i 's/\"yarn.service.rolling-log.include-pattern\".*/\"yarn.service.rolling-log.include-pattern\" : \"\.\*\", \"yarn.service.log.include-pattern\" : \"\.\*\",/g' ./llap-yarn-*/Yarnfile
 sed -i "s/\"id\".*/\"id\" : \"\/user\/hive\/.yarn\/package\/LLAP\/$tar_name\",/g" ./llap-yarn-*/Yarnfile
 
-# pushd ./llap-yarn-*/
-# mkdir llap_temp
-# tar -xvzf llap-*tar.gz -C llap_temp
-# pushd llap_temp/
-# cp /hadoop-{{ hadoop_version }}/share/hadoop/yarn/hadoop-yarn-services-api-{{ hadoop_version }}.jar lib/
-# cp /hadoop-{{ hadoop_version }}/share/hadoop/yarn/hadoop-yarn-services-core-{{ hadoop_version }}.jar lib/
-# cp conf/hadoop-metrics2.properties conf/hadoop-metrics2-llapdaemon.properties
-# tar czf ../llap-*tar.gz *
-# popd
-# popd
+pushd ./llap-yarn-*/
+mkdir llap_temp
+tar -xvzf llap-*tar.gz -C llap_temp
+pushd llap_temp/
+#cp /hadoop-{{ hadoop_version }}/share/hadoop/yarn/hadoop-yarn-services-api-{{ hadoop_version }}.jar lib/
+#cp /hadoop-{{ hadoop_version }}/share/hadoop/yarn/hadoop-yarn-services-core-{{ hadoop_version }}.jar lib/
+cp conf/hadoop-metrics2.properties conf/hadoop-metrics2-llapdaemon.properties
+tar czf ../llap-*tar.gz *
+popd
+popd
 hdfs dfs -copyFromLocal llap-yarn-*/$tar_name  /user/hive/.yarn/package/LLAP/
 ./llap-yarn-*/run.sh
 /sleep.sh

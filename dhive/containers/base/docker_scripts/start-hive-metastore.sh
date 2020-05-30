@@ -34,7 +34,10 @@ else
     export HIVE_CLASSPATH="`pwd`/mysql-connector-java-$MYSQL_VERSION.jar"
 fi
 
-export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /hadoop/share/hadoop/tools/lib -name '*.jar')
+rm /hive/lib/guava-*
+cp /hadoop/share/hadoop/hdfs/lib/guava-* /hive/lib/
+export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /hadoop/share/hadoop/tools/lib -name '*.jar' | tr ' ' ':')
+export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(echo hive/lib/*.jar | tr ' ' ':')
 
 HADOOP_CLIENT_OPTS=-Dhive.root.logger=console hive --service metastore
 /sleep.sh

@@ -16,7 +16,7 @@ HADOOP={{no_hadoop}}
 
 
 assure_hadoop() {
-    wget -nc $HADOOP_URL || exit 1
+    wget -nc --no-check-certificate $HADOOP_URL || exit 1
     cp hadoop-$HADOOP_VERSION.tar.gz $BASE_CONTAINER_PATH
 }
 

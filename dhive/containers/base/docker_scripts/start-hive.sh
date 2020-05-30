@@ -29,7 +29,7 @@ hdfs dfs -chmod g+w /user/hive/tmp
 hdfs dfs -chmod 777 /user/hive/tmp/scratchdir /user/hive/external/ /tmp \
     /user/hive/tmp/scratchdir/whoever $HIVE_DFS_INSTALL /ranger/audit \
     /user/yarn/yarn /user/yarn/framework /user/yarn/yarn/services/dhive-llap/ \
-    /user/yarn/yarn/services /tmp/ /user/hive/tmp/scratchdir/hive
+    /user/yarn/yarn/services /tmp/ /user/hive/tmp/scratchdir/hive /user/hive/warehouse
 
 hdfs dfs -chown -R hive /user/hive/ $HIVE_DFS_INSTALL /user/yarn/
 
@@ -39,9 +39,15 @@ kerberos_auth hive/hs2.example.com
 [ ! -z "$RANGER_VERSION" ] && bash -x /start-ranger-hive.sh
 
 # Add Tez jars to the classpath
-export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /tez_jars -name '*.jar')
-export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(find /hadoop/share/hadoop/tools/lib -name '*.jar')
+export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(echo tez_jars/*.jar | tr ' ' ':')
+#export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(echo tez_jars/lib/*.jar | tr ' ' ':')
 
+# Hive has the wrong guava version.
+rm /hive/lib/guava-*
+cp /hadoop/share/hadoop/hdfs/lib/guava-* /hive/lib/
+export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(echo hive/lib/*.jar | tr ' ' ':')
+export HIVE_CLASSPATH=$HIVE_CLASSPATH:$(echo /hadoop/share/hadoop/tools/lib/*jar | tr ' ' ':')
+export HADOOP_CLASSPATH=$HIVE_CLASSPATH
 # cp /hadoop/share/hadoop/tools/lib/* /hadoop/share/hadoop/common/lib/
 
 echo $HIVE_CLASSPATH
