@@ -1,8 +1,8 @@
-FROM centos:7
+FROM centos:8
 
 RUN yum -y install krb5-server krb5-workstation
 RUN yum -y install java-1.8.0-openjdk-headless
-RUN yum -y install apache-commons-daemon-jsvc
+#RUN yum -y install apache-commons-daemon-jsvc
 RUN yum -y install less
 RUN yum install net-tools -y
 RUN yum install telnet telnet-server -y
