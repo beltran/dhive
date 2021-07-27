@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 HIVE_VERSION={{ hive_version }}
-HIVE_URL=http://www-us.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
+HIVE_URL=https://downloads.apache.org/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
 HIVE_PAZ={{ hive_path }}
 BASE_CONTAINER_PATH=build/containers/base
 

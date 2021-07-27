@@ -6,7 +6,7 @@ RANGER_VERSION={{ ranger_version }}
 HIVE_VERSION={{ hive_version }}
 TEZ_VERSION={{ tez_version }}
 
-HADOOP_URL=http://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+HADOOP_URL=https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 BUILD_PATH=build
 BASE_CONTAINER_PATH=build/containers/base
