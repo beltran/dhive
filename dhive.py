@@ -166,7 +166,7 @@ volumes:
                 os.chmod(source_file, 0o444)
 
     def generate_docker_compose(self, config):
-        compose_template = yaml.load(self.template)
+        compose_template = yaml.safe_load(self.template)
 
         compose_template["services"] = {}
 

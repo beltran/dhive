@@ -13,7 +13,7 @@ generate:
 	python3 dhive.py --namespace=$(namespace)
 
 stop: stop-monitoring
-	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml down
+	docker-compose -f ${DOCKER_COMPOSE_PATH}/docker-compose.yml down --remove-orphans
 
 
 start: stop start-monitoring
