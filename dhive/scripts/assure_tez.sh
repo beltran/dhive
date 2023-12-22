@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 TEZ_VERSION={{ tez_version }}
-TEZ_URL=http://www-eu.apache.org/dist/tez/$TEZ_VERSION/apache-tez-$TEZ_VERSION-bin.tar.gz
+TEZ_URL=https://dlcdn.apache.org/tez/$TEZ_VERSION/apache-tez-$TEZ_VERSION-bin.tar.gz
 TEZ_PAZ={{ tez_path }}
 BASE_CONTAINER_PATH=build/containers/base
 
