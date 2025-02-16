@@ -2,6 +2,7 @@
 
 HIVE_VERSION={{ hive_version }}
 HIVE_URL=https://downloads.apache.org/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
+ARCHIVE_HIVE_URL=https://archive.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
 HIVE_PAZ={{ hive_path }}
 BASE_CONTAINER_PATH=build/containers/base
 
@@ -24,7 +25,7 @@ if [ "$HIVE_COMPILE" = "1" ]; then
 else
     if [[ -z "${HIVE_PAZ}" ]]; then
         echo "Downloading hive"
-        wget -nc --no-check-certificate $HIVE_URL || true
+        wget -nc --no-check-certificate $HIVE_URL ||  wget -nc --no-check-certificate $ARCHIVE_HIVE_URL || true
         cp apache-hive-$HIVE_VERSION-bin.tar.gz hive.tar.gz
     else
         cp $HIVE_PAZ/packaging/target/apache-hive-$HIVE_VERSION-bin.tar.gz hive.tar.gz || { echo 'Copy failed' ; exit 3; }
